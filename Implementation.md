@@ -1,5 +1,25 @@
 ﻿# Implementation notes
 
+## Contents
+
+* [Tools](#tools)
+* [Project directory layout](#project-directory-layout)
+* [Navigation panel](#navigation-panel)
+
+# Tools
+
+## Thor
+
+Run `thor help` to get help on anything.  In particular, if you forget the various tasks
+defined here, you can run one of these:
+
+```
+thor help docs
+thor help dev
+thor help deploy
+```
+
+
 ## Project directory layout
 
 ```
@@ -111,17 +131,42 @@ the *docs* directory:
 │       └── hat.gif
 ```
 
+## Navigation panel
 
+The left-side navigation panel is provided in the source markup for the home page
+as
 
-# Tools
-
-## Thor
-
-Run `thor help` to get help on anything.  In particular, if you forget the various tasks
-defined here, you can run one of these:
-
+```html
+<div id='sidebar-content'>
+  <ul id='categories'>
+    <li class='loader'>Loading...</li>
+  </ul>
+  <ul class='entries' id='results'>
+    <li class='not-found'>Nothing found.</li>
+  </ul>
+</div>
 ```
-thor help docs
-thor help dev
-thor help deploy
+
+In the original jqapi code, in *categories.js.coffee*, the content for this was loaded
+via ajax from *docs/index.json*.  It built an HTML structure like this:
+
+```html
+<ul id='categories'>
+  <li class='top-cat open'>
+    <span class='top-cat-name'>Ajax</span>
+    <ul class='sub-cats'>
+      <li class='sub-cat open'>
+        <span class='sub-cat-name'>Global Ajax Event Handlers</span>
+        <ul class='entries'>
+          <li class='entry' data-slug='ajaxStart'>
+            <span class='title'>.ajaxStart()</span>
+            <span class='desc'>Register a handler ...</span>
+          </li>
+          ...
+        </ul>
+      </li>
+      ...
+    </ul>
+  </li>
+</ul>
 ```

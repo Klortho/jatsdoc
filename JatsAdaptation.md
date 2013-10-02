@@ -52,9 +52,7 @@ documentation instead.  Implementation is a bit hacky right now:
 
 * To generate the jQuery documentation static files, you used to enter
   `thor deploy:generate`.  Now, enter `thor deploy:generate --docset=jq`
-* The command without the docset parameter (`thor deploy:generate`)
-  now builds the default, "example" document set, from static HTML files in
-  `app`.
+
 
 ## Changes to source code
 
@@ -64,11 +62,6 @@ documentation instead.  Implementation is a bit hacky right now:
 
 * Changed the files in `app` to serve static HTML files.  These will be the
   default, "example" set of documentation.
-
-* The `docs:generate` task generates the jQuery documentation set, which, before my
-  changes, were in the `docs` directory.
-  I moved it to `jq/content`. (I renamed `docs` -> `content`, because I felt that
-  the name `docs` was already being used in too many places.)
 
 
 # To do

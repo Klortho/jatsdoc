@@ -4,9 +4,9 @@ This is a revamp of https://github.com/mustardamus/jqapi and still under develop
 
 This particular fork/branch is an effort to adapt it to the JATS Tag Library.
 
-## Contents:
+## Contents
 
-* Development - below
+* [Development](#development) - below
 * [Implementation.md](Implementation.md) - notes about how it all works (from a Ruby newbie)
 * [JatsAdaptation.md](JatsAdaptation.md) - info about the JATS adaptation effort, including list
   of major changes, to do list, etc.
