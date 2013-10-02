@@ -11,6 +11,7 @@ module Jqapi
   ].freeze
 
   class Server < Sinatra::Base
+    set :docset, $docset   # which set of documentation to serve
     set :root, File.join(File.dirname(__FILE__), '..')
     set :views, File.join(root, 'app/views')
     set :sprockets, Sprockets::Environment.new(root)
@@ -65,8 +66,15 @@ module Jqapi
     end
 
     get '/' do
-      content_type :html
-      haml :index
+      if settings.docset == 'jats'
+        content_type :html
+        # Serving from `docs-jats` is temporary, during migration.  Eventually, the
+        # JATS documentation will be built in the same `docs` directory as the jqapi docs.
+        serve_file('docs-jats', 'index.html')
+      else  # default is jqapi
+        content_type :html
+        haml :index
+      end
     end
 
 

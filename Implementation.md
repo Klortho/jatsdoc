@@ -22,7 +22,8 @@
 │   ├── jqapi.rb - this is the main application ruby file, it maps all the URLs
 │   └── views
 │       └── index.haml - the top-level view
-├── config.ru - top level file that defines the application.  This "requires" app/jqapi.rb
+├── config.ru - config file for rackup; top-level configuration that defines the application.
+│     This "requires" app/jqapi.rb
 ├── Gemfile - defines all the dependencies
 ├── LICENSE
 ├── README.md
@@ -66,7 +67,7 @@ the *docs* directory:
 │   │   ├── addBack.json
 │   │   ├── ... lots and lots of .json files
 │   │   └── wrap.json
-│   ├── index.json
+│   ├── index.json - left-side navigation bar; nothing to do with index.haml.
 │   ├── resources
 │   │   ├── 0042_04_01.png
 │   │   ├── ... lots of .pngs
@@ -95,9 +96,9 @@ the *docs* directory:
 │   │   │   ├── addBack.json
 │   │   │   ├── ... lots and lots of .json files
 │   │   │   └── wrap.json
-│   │   ├── index.json
+│   │   ├── index.json - left-side navigation bar; nothing to do with index.haml.
 │   │   └── versions.json
-│   ├── index.html
+│   ├── index.html - main content on the home page; built from index.haml
 │   ├── LICENSE
 │   ├── README.md
 │   └── resources
