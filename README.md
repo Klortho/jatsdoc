@@ -7,8 +7,8 @@ This particular fork/branch is an effort to adapt it to the JATS Tag Library.
 ## Contents:
 
 * Development - below
-* [Implementation.md]() - notes about how it all works (from a Ruby newbie)
-* [JatsAdaptation.md]() - info about the JATS adaptation effort, including list
+* [Implementation.md](Implementation.md) - notes about how it all works (from a Ruby newbie)
+* [JatsAdaptation.md](JatsAdaptation.md) - info about the JATS adaptation effort, including list
   of major changes, to do list, etc.
 
 
