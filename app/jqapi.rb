@@ -37,6 +37,14 @@ module Jqapi
       serve_file('docs', 'index.json')
     end
 
+    get '/docs/*.html' do
+      if settings.docset == 'jats'
+        content_type :html
+        serve_file('docs-jats', "#{params[:splat][0]}.html")
+      end
+    end
+
+
     get '/docs/versions.json' do
       serve_file('docs', 'versions.json')
     end

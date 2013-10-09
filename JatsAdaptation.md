@@ -26,12 +26,19 @@
 
 - Add navigation panel (index.json)
     - Let's put it into an HTML file: docs-jats/toc.html
+        - How do I communicate the configuration parameter docset into the categories.js?
+
     - app/assets/javascripts/categories.js.coffee,
       jq/assets/javascripts/categories.js.coffee
     - Need a way to pass in the "docset" parameter into this JS.
     - See also jats/content/jxml2json-2.xsl and/or jats/content/make-index-json.xsl -
       I think this is what I used to turn the Tag Library into index.json for the
       nav panel
+
+
+
+
+
 
 - Other significant code changes in my old dtdanalyzer branch
     - app/assets/javascripts/entry.js.coffee,

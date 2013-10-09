@@ -15,9 +15,20 @@ class jqapi.Categories
     jqapi.events.on 'categories:toggle', (e, catEl) =>    # on request to toggle a category
       @toggleCategory catEl                               # toggle the category content
 
-    $.getJSON 'docs/index.json', (data) =>               # load the index json data with all categories and entries
-      @buildNavigation data                               # and build from the object when loaded
-      jqapi.events.trigger 'index:done', [data]           # let the app know that the index is loaded
+
+    sidebarEl = $ '#sidebar-content'
+    if sidebarEl.attr('data-from')
+      console.info("getting sidebar from " + sidebarEl.attr('data-from'))
+      # load the index html file with all categories and entries
+      $.get 'docs/' + sidebarEl.attr('data-from'), (html) =>
+        data = @getNavigation html                        # and parse the data out from that html when loaded
+        $(html).appendTo @el
+
+    else
+      $.getJSON 'docs/index.json', (data) =>              # load the index json data with all categories and entries
+        @buildNavigation data                             # and build from the object when loaded
+        jqapi.events.trigger 'index:done', [data]         # let the app know that the index is loaded
+
 
     @el.on 'click', '.top-cat-name, .sub-cat-name', ->    # on clicking a category header
       self.toggleCategory $(@).parent()                   # toggle the category
@@ -38,6 +49,49 @@ class jqapi.Categories
         topCatEl.appendTo @el                             # append parent category object to list
 
     jqapi.events.trigger 'navigation:done'                # everything done. let anybody know.
+
+
+  getNavigation: (html) ->                                # parse the categories array out of the navigation html
+    categories =  []
+
+    $(html).find('li.top-cat').each (index, topcat) =>
+
+      subcats = []
+      for subcat in $(topcat).find('ul.sub-cats li.sub-cat')
+        subcatEl = $(subcat)
+
+        entries = []
+        for entry in subcatEl.find('ul.entries li.entry')
+          entryEl = $(entry)
+          entries.push
+            slug: entryEl.attr 'data-slug'
+            title: entryEl.children('span.title').text()
+            desc: entryEl.children('span.desc').text()
+
+        subcats.push
+          slug: subcatEl.attr 'data-slug'
+          name: subcatEl.children('span.sub-cat-name').text()
+          entries: entries
+
+      entries = []
+      for entry in $(topcat).find('ul.entries li.entry')
+        entryEl = $(entry)
+        entries.push
+          slug: entryEl.attr 'data-slug'
+          title: entryEl.children('span.title').text()
+          desc: entryEl.children('span.desc').text()
+
+      categories.push
+        slug: $(topcat).attr 'data-slug'
+        name: $(topcat).children('span.top-cat-name').text()
+        subcats: subcats
+        entries: entries
+
+    jqapi.events.trigger 'navigation:done'                # everything done. let anybody know.
+
+    categories
+
+
 
   buildEntriesList: (entries) ->                          # build entries list elements for top/sub categories
     el = $ templates.entriesList()                        # get template
