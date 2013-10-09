@@ -2,7 +2,8 @@
 
 This is a revamp of https://github.com/mustardamus/jqapi and still under development.
 
-This particular fork/branch is an effort to adapt it to the JATS Tag Library.
+This particular fork/branch (Klortho/jqapi, jats branch) is an effort to adapt it to
+the JATS Tag Library.
 
 ## Contents
 
@@ -17,8 +18,8 @@ This particular fork/branch is an effort to adapt it to the JATS Tag Library.
 The development environment consists of a Sinatra server and a Thor
 tool belt.
 
-Served with Sprockets we can use CoffeeScript and SASS. Views will
-be written in HAML.
+Served with Sprockets we can use CoffeeScript and SASS. Views are
+written in HAML.
 
 ### Install prerequisites
 
@@ -34,14 +35,12 @@ Then install all the other Gems:
 
 ### Generate the documentation
 
-***Download it:***
+The following downloads the official jQuery documentation from GitHub, and
+puts it into the *tmp* directory.
 
     thor docs:download
 
-The GitHub repo of the official docs site will be cloned/updated, and put into the
-*tmp* directory.
-
-***Generate it:***
+This converts the documentation into the JSON format required by this library:
 
     thor docs:generate
 

@@ -2,9 +2,18 @@
 
 ## Contents
 
+* [Miscellaneous notes](#miscellaneous-notes)
 * [Tools](#tools)
 * [Project directory layout](#project-directory-layout)
 * [Navigation panel](#navigation-panel)
+
+
+# Miscellaneous notes
+
+- The dev server is extremely slow.
+- List of source filename extensions:
+    *.xml;*.html;*.md;*.haml;*.js.coffee;*.css.sass;*.ru;*.rb;*.thor
+
 
 # Tools
 

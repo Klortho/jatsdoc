@@ -1,17 +1,77 @@
 ﻿# jQAPI JATS adaptation project
 
-# See also
+## Current status and strategy
 
-See also my [JatsTagLibrary](https://github.com/Klortho/jatstaglibrary) project.
-Eventually, the work specifically related to JATS Tag library should be moved there,
-and this repository should just be about the javascript documentation framework.
+### Strategy
 
-Here is what I have so far:  [http://chrisbaloney.com/jqapi-jats/]().
-  * The Table of Contents is working
-  * Still need to adapt the documentation page contents.
+- I am working on manually "rebasing" my changes from the dtdanalyzer branch (see below)
+  onto the latest and greatest master branch from jqapi/jqapi, into the "jats" branch.
+- Use the development server for dev/testing - keep this functional at all stages
+- Don't change anything that doesn't need to be changed in the original code, esp. for
+  aesthetic reasons.
+- Absolutely no reason to have the same server be able to serve both sets of documentation
+  at the same time.  Use an environment variable or command-line parameters to switch the
+  docs from one to another.
+- "docs:download" and "docs:generate" shouldn't be implemented in *this* project for
+  the JATS documentation.  They should be implemented outside.
+- I need to be faithful to the original documentation's structure, so that means there
+  will need to be a couple of major improvements to the jqapi code.  In particular:
+    - Headings are pages
+    - How deeply are they nested?
+    - Subheadings mixed in with pages (rather than putting them first)
 
 
-# Switching from default documentation set (jqapi) to jats documentation set.
+
+### Work
+
+- Add navigation panel (index.json)
+    - Let's put it into an HTML file: docs-jats/toc.html
+    - app/assets/javascripts/categories.js.coffee,
+      jq/assets/javascripts/categories.js.coffee
+    - Need a way to pass in the "docset" parameter into this JS.
+    - See also jats/content/jxml2json-2.xsl and/or jats/content/make-index-json.xsl -
+      I think this is what I used to turn the Tag Library into index.json for the
+      nav panel
+
+- Other significant code changes in my old dtdanalyzer branch
+    - app/assets/javascripts/entry.js.coffee,
+      jq/assets/javascripts/entry.js.coffee
+    - app/assets/javascripts/header.js.coffee,
+      jq/assets/javascripts/header.js.coffee
+    - tasks/deploy.thor
+    - tasks/documentation.thor
+
+- Major improvements:
+    - Allow interspersing of sub-cats and entries
+    - Allow pages to be loaded for categories and sub-cats
+
+- To do:
+    - Change "docs-jats" to "docs" everywhere, since we'll
+      be using the same directory docs regardless of the docset
+    - Figure out (ask Sebastian or Dr. Hazins) the proper way to pass in the
+      docset parameter from thor to the jqapi.rb config file.
+
+
+## dtdanalyzer branch
+
+This is the original work I did on this project, before restarting it in October.
+
+- ~/git/Klortho/jqapi-dtdanalyzer has the code where I last left off
+- Here are the changes I made in the dtdanalyzer branch:
+  https://github.com/Klortho/jqapi/compare/919ad7bade18e4...8e533982
+* It is deployed to [http://chrisbaloney.com/jqapi-jats/](http://chrisbaloney.com/jqapi-jats/).
+    * The Table of Contents is working
+    * Still need to adapt the documentation page contents.
+
+
+## See also
+
+* [GitHub Klortho/JatsTagLibrary](https://github.com/Klortho/JatsTagLibrary) -
+  This will be the source of the *content* for the documentation.
+
+
+
+## Switching to the JATS documentation set
 
 The goals in implementing this were:
 
@@ -21,7 +81,7 @@ The goals in implementing this were:
 * To keep the default behavior the same as the original jqapi code worked in
   every respect.
 
-## Documentation set differences
+### Documentation set differences
 
 In the JATS documentation set:
 
@@ -64,7 +124,10 @@ documentation instead.  Implementation is a bit hacky right now:
   default, "example" set of documentation.
 
 
-# To do
+# Old to do
+
+These are old to-do items, from before I restarted the project with the *jats* branch.
+I'm not sure if they still apply or not:
 
 * CSS issues
     * Need to verify that styles defined in, for example, jq/assets/stylesheets, will
@@ -75,6 +138,5 @@ documentation instead.  Implementation is a bit hacky right now:
 * Bug:  in JATS, search doesn't work on element names (because of the angle-brackets?)
 * Get the breadcrumbs to work - this will probably mean parsing the HTML into JSON for the main
   page.
-* Create a documentation task that builds jats docs
 * Get the "Original on jats..." link to work on each page.
 
