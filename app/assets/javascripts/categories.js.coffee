@@ -16,11 +16,10 @@ class jqapi.Categories
       @toggleCategory catEl                               # toggle the category content
 
 
-    sidebarEl = $ '#sidebar-content'
-    if sidebarEl.attr('data-from')
-      console.info("getting sidebar from " + sidebarEl.attr('data-from'))
+    # Switch between loading the navigation content as HTML vs. JSON
+    if $('body').attr('data-docset-type') == "html"
       # load the index html file with all categories and entries
-      $.get 'docs/' + sidebarEl.attr('data-from'), (html) =>
+      $.get 'docs/toc.html', (html) =>
         data = @getNavigation html                        # and parse the data out from that html when loaded
         $(html).appendTo @el
 

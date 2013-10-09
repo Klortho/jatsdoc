@@ -37,12 +37,15 @@ module Jqapi
       serve_file('docs', 'index.json')
     end
 
+    # This takes care of HTML files anywhere under docs, including subdirectories
+    # like, e.g., /docs/entries/how-to-use.html.
     get '/docs/*.html' do
       if settings.docset == 'jats'
         content_type :html
         serve_file('docs-jats', "#{params[:splat][0]}.html")
       end
     end
+
 
 
     get '/docs/versions.json' do

@@ -69,57 +69,64 @@ dependencies that were installed for this project.
 the *docs* directory:
 
 ```
-├── docs
-│   ├── categories.json
-│   ├── entries
-│   │   ├── addBack.json
-│   │   ├── ... lots and lots of .json files
-│   │   └── wrap.json
-│   ├── index.json - left-side navigation bar; nothing to do with index.haml.
-│   ├── resources
-│   │   ├── 0042_04_01.png
-│   │   ├── ... lots of .pngs
-│   │   ├── animate-1.jpg
-│   │   ├── animate-2.jpg
-│   │   ├── events.js
-│   │   └── hat.gif
-│   └── versions.json
+└── docs
+    ├── index.json - left-side navigation bar; nothing to do with index.haml.
+    ├── categories.json - I'm [cfm] not sure this is used.
+    ├── versions.json - I [cfm] don't know what this is used for.
+    ├── entries
+    │   ├── addBack.json
+    │   ├── ... lots and lots of .json files
+    │   └── wrap.json
+    └── resources
+        ├── 0042_04_01.png
+        ├── ... lots of .pngs
+        ├── animate-1.jpg
+        ├── animate-2.jpg
+        ├── events.js
+        └── hat.gif
 ```
 
 `thor deploy:generate` then shuffles things around quite a bit, putting results into the
 *public* directory:
 
 ```
-├── public
-│   ├── assets
-│   │   ├── bundle.css - this was bundled up and moved here, includes a bunch of library js's
-│   │   ├── bundle.js - this was bundled up and moved here, includes library reset.css ?
-│   │   ├── jquery.js - copied here from vendor/assets/javascripts?  diff doesn't match,
-│   │   │     but the changes are minimal
-│   │   ├── arrow.png
-│   │   └── ... various images and tools originally from assets
-│   ├── docs
-│   │   ├── categories.json
-│   │   ├── entries
-│   │   │   ├── addBack.json
-│   │   │   ├── ... lots and lots of .json files
-│   │   │   └── wrap.json
-│   │   ├── index.json - left-side navigation bar; nothing to do with index.haml.
-│   │   └── versions.json
-│   ├── index.html - main content on the home page; built from index.haml
-│   ├── LICENSE
-│   ├── README.md
-│   └── resources
-│       ├── 0042_04_01.png
-│       ├── ... lots of .pngs
-│       ├── 0042_06_44.png
-│       ├── animate-1.jpg
-│       ├── animate-2.jpg
-│       ├── events.js
-│       └── hat.gif
+└── public
+    ├── index.html - main content on the home page; built from index.haml
+    ├── LICENSE
+    ├── README.md
+    ├── assets
+    │   ├── bundle.css - this was bundled up and moved here, includes a bunch of library js's
+    │   ├── bundle.js - this was bundled up and moved here, includes library reset.css ?
+    │   ├── jquery.js - copied here from vendor/assets/javascripts?  diff doesn't match,
+    │   │     but the changes are minimal
+    │   ├── arrow.png
+    │   └── ... various images and tools originally from assets
+    ├── docs
+    │   ├── index.json - left-side navigation bar; nothing to do with index.haml.
+    │   ├── categories.json
+    │   ├── versions.json
+    │   └── entries
+    │       ├── addBack.json
+    │       ├── ... lots and lots of .json files
+    │       └── wrap.json
+    └── resources
+        ├── 0042_04_01.png
+        ├── ... lots of .pngs
+        ├── 0042_06_44.png
+        ├── animate-1.jpg
+        ├── animate-2.jpg
+        ├── events.js
+        └── hat.gif
 ```
 
-## Navigation panel
+
+## Content
+
+### Top-level "index" page
+
+
+
+### Navigation panel
 
 The left-side navigation panel is provided in the source markup for the home page
 as
@@ -135,7 +142,7 @@ as
 </div>
 ```
 
-In the original jqapi code, in *categories.js.coffee*, the content for this was loaded
+In the original jqapi code, in *categories.js.coffee*, the content for this is loaded
 via ajax from *docs/index.json*.  It built an HTML structure like this:
 
 ```html

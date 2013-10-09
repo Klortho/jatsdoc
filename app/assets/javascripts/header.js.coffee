@@ -11,7 +11,7 @@ class jqapi.Header
       sigText  = $.trim($(@).text())                      # hacked together, use events instead
       entryEl  = $('#entry')
       targetEl = $(".signature .title:contains(#{sigText})", entryEl)
-      
+
       if targetEl.length
         entryEl.scrollTop 0
         entryEl.scrollTop targetEl.parent().offset().top - self.el.height()
@@ -33,24 +33,24 @@ class jqapi.Header
   getSignatures: (entry) ->                               # orange b.
     retArr = []
 
-    for ent in entry.entries
-      sigArr = ent.signatures
-      sigArr = [ent.signatures] unless $.isArray(sigArr)
+    if entry.entries
+      for ent in entry.entries
+        sigArr = ent.signatures
+        sigArr = [ent.signatures] unless $.isArray(sigArr)
 
-      for sig in sigArr
-        argsArr = sig.argument
-        argsArr = [sig.argument] unless $.isArray(argsArr)
-        joinArr = []
+        for sig in sigArr
+          argsArr = sig.argument
+          argsArr = [sig.argument] unless $.isArray(argsArr)
+          joinArr = []
 
-        for arg in argsArr
-          comma = ""
-          comma = ", " unless joinArr.length is 0
-          if arg and arg.optional
-            joinArr.push "[#{comma}#{arg.name}]" if arg and arg.name
-          else
-            joinArr.push "#{comma}#{arg.name}" if arg and arg.name
+          for arg in argsArr
+            comma = ""
+            comma = ", " unless joinArr.length is 0
+            if arg and arg.optional
+              joinArr.push "[#{comma}#{arg.name}]" if arg and arg.name
+            else
+              joinArr.push "#{comma}#{arg.name}" if arg and arg.name
 
-        retArr.push joinArr.join(' ')
-
+          retArr.push joinArr.join(' ')
 
     retArr

@@ -21,19 +21,16 @@
     - Subheadings mixed in with pages (rather than putting them first)
 
 
-
 ### Work
 
-- Add navigation panel (index.json)
-    - Let's put it into an HTML file: docs-jats/toc.html
-        - How do I communicate the configuration parameter docset into the categories.js?
+c Load entries from HTML files.
+    c Get this to work:  http://swtbde:9292/docs/entries/how-to-use.html
+    c Now get it integrated into the page
+    c Switch to using a single 'data' attribute to switch between html and json:
+        body/@data-docset-type="html"
 
-    - app/assets/javascripts/categories.js.coffee,
-      jq/assets/javascripts/categories.js.coffee
-    - Need a way to pass in the "docset" parameter into this JS.
-    - See also jats/content/jxml2json-2.xsl and/or jats/content/make-index-json.xsl -
-      I think this is what I used to turn the Tag Library into index.json for the
-      nav panel
+
+
 
 
 
@@ -41,7 +38,7 @@
 
 
 - Other significant code changes in my old dtdanalyzer branch
-    - app/assets/javascripts/entry.js.coffee,
+    c app/assets/javascripts/entry.js.coffee,
       jq/assets/javascripts/entry.js.coffee
     - app/assets/javascripts/header.js.coffee,
       jq/assets/javascripts/header.js.coffee
@@ -57,6 +54,10 @@
       be using the same directory docs regardless of the docset
     - Figure out (ask Sebastian or Dr. Hazins) the proper way to pass in the
       docset parameter from thor to the jqapi.rb config file.
+    - Replace the favicon
+    - When you dynamically load a new entry, the jqapi code changes the page
+      title, adding the "- jQAPI" suffix.  This needs to be customizable.
+      (See entry.js.coffee, lines 18-19)
 
 
 ## dtdanalyzer branch
@@ -115,6 +116,28 @@ documentation instead.  Implementation is a bit hacky right now:
 
 # Change summary
 
+These are summaries of the major changes that I made in the *jats* branch.
+
+- Add JATS navigation panel, loaded from docs-jats/toc.html
+    - In the original jquery content set, the navigation panel, in the left-hand
+      pane, is loaded from docs/index.json
+    - In the JATS content set, I'll load it from docs-jats/toc.html, served from
+      the URL docs/toc.html.
+    - This is implemented in app/assets/javascripts/categories.js.coffee.
+    - In order for that JS to distinguish between the two, we have to communicate to the
+      JS code that the docset for this uses HTML, not JSON.
+      I added the @data-docset-type attribute into the index.html page, as follows:
+        <body data-docset-type='html'>
+
+- Entries are loaded from html files, not json.
+    - This is also controlled by the body@data-docset-type attribute
+    - Implemented in entry.js.coffee.
+
+
+# Records from old dtdanalyzer branch
+
+## Old list of major changes
+
 ## Changes to commands & procedures
 
 * To generate the jQuery documentation static files, you used to enter
@@ -131,7 +154,7 @@ documentation instead.  Implementation is a bit hacky right now:
   default, "example" set of documentation.
 
 
-# Old to do
+## Old to do
 
 These are old to-do items, from before I restarted the project with the *jats* branch.
 I'm not sure if they still apply or not:
