@@ -10,9 +10,9 @@
 
 ## Project directory layout
 
-<code style='color: red'>├── air - Adobe air app.  I [cfm] don't know anything about this.</code><br/>
-<code>├── app</code><br/>
-<pre>
+```
+├── air - Adobe air app.  I [cfm] don't know anything about this.
+├── app
 │   ├── assets
 │   │   ├── images
 │   │   │   ├── arrow.png
@@ -57,7 +57,7 @@
         │   └── sandbox.coffee
         └── stylesheets - CSS libraries
             └── reset.css
-</pre>
+```
 
 `bundle install` generates *Gemfile.lock*, which contains a snapshot of all of the
 dependencies that were installed for this project.
