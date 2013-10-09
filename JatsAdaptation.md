@@ -2,6 +2,15 @@
 
 ## Current status and strategy
 
+- I do not have time to do this the "right" way, meaning to migrate the jqapi code
+  such that the same code base can be used with either the original jQuery JSON files
+  or with the JATS Tag Library HTML files.
+- I created Git tag "cp1" to mark where I abandoned the idea of doing it the right way,
+  in case I ever have time or the skill to go back and refactor.
+
+
+
+
 ### Strategy
 
 - I am working on manually "rebasing" my changes from the dtdanalyzer branch (see below)
