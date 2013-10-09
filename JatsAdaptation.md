@@ -23,25 +23,15 @@
 
 ### Work
 
-c Load entries from HTML files.
-    c Get this to work:  http://swtbde:9292/docs/entries/how-to-use.html
-    c Now get it integrated into the page
-    c Switch to using a single 'data' attribute to switch between html and json:
-        body/@data-docset-type="html"
-
-
-
-
-
-
-
-
+- Next up:
+    - Take the main content pane out of index.html/index.haml, and put it into
+      docs.  The reason is that index.haml really is the view, and should remain
+      as index.haml.  But, I don't want
+      to have to convert JATS tag library home pages into HAML.
+    - CSS and so forth should be parameterized, and put into the index.haml.
+      Eventually, docset-specific JS would also be implemented this way.
 
 - Other significant code changes in my old dtdanalyzer branch
-    c app/assets/javascripts/entry.js.coffee,
-      jq/assets/javascripts/entry.js.coffee
-    - app/assets/javascripts/header.js.coffee,
-      jq/assets/javascripts/header.js.coffee
     - tasks/deploy.thor
     - tasks/documentation.thor
 
