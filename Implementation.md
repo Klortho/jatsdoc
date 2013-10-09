@@ -11,7 +11,7 @@
 ## Project directory layout
 
 <pre>
-├── air - Adobe air app.  I [cfm] don't know anything about this.
+<span style='background-color: yellow'>├── air - Adobe air app.  I [cfm] don't know anything about this.</span>
 ├── app
 │   ├── assets
 │   │   ├── images
