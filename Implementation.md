@@ -8,31 +8,10 @@
 * [Navigation panel](#navigation-panel)
 
 
-# Miscellaneous notes
-
-- The dev server is extremely slow.
-- List of source filename extensions:
-    *.xml;*.html;*.md;*.haml;*.js.coffee;*.css.sass;*.ru;*.rb;*.thor
-
-
-# Tools
-
-## Thor
-
-Run `thor help` to get help on anything.  In particular, if you forget the various tasks
-defined here, you can run one of these:
-
-```
-thor help docs
-thor help dev
-thor help deploy
-```
-
-
 ## Project directory layout
 
-```
-├── air - Adobe air app.  I don't think this is important.
+<pre>
+├── air - Adobe air app.  I [cfm] don't know anything about this.
 ├── app
 │   ├── assets
 │   │   ├── images
@@ -78,7 +57,7 @@ thor help deploy
         │   └── sandbox.coffee
         └── stylesheets - CSS libraries
             └── reset.css
-```
+</pre>
 
 `bundle install` generates *Gemfile.lock*, which contains a snapshot of all of the
 dependencies that were installed for this project.
@@ -179,3 +158,18 @@ via ajax from *docs/index.json*.  It built an HTML structure like this:
   </li>
 </ul>
 ```
+
+
+## Tools
+
+### Thor
+
+Run `thor help` to get help on anything.  In particular, if you forget the various tasks
+defined here, you can run one of these:
+
+```
+thor help docs
+thor help dev
+thor help deploy
+```
+
