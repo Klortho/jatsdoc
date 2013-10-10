@@ -1,11 +1,14 @@
 class jqapi.Templates
+  htmlEscape: (s) ->
+    s.replace(/&/g, "&amp;").replace(/</g, "&lt;")
+
   subcatsList: ->
     '<ul class="sub-cats" />'
 
   categoryItem: (pos, name) ->
     """
     <li class='#{pos}-cat'>
-      <span class='#{pos}-cat-name'>#{name}</span>
+      <span class='#{pos}-cat-name'>#{@htmlEscape(name)}</span>
     </li>
     """
 
@@ -15,8 +18,8 @@ class jqapi.Templates
   entriesItem: (entry) ->
     """
     <li class='entry' data-slug='#{entry.slug}'>
-      <span class='title'>#{entry.title}</span>
-      <span class='desc'>#{entry.desc}</span>
+      <span class='title'>#{@htmlEscape(entry.title)}</span>
+      <span class='desc'>#{@htmlEscape(entry.desc)}</span>
     </li>
     """
 
@@ -36,9 +39,9 @@ class jqapi.Templates
     """
     <div id='entry-wrapper'>
       <div id='entry-header'>
-        <h1>#{entry.title}</h1>
-        <p>#{entry.desc}</p>
-        #{dep}
+        <h1>#{@htmlEscape(entry.title)}</h1>
+        <p>#{@htmlEscape(entry.desc)}</p>
+        #{@htmlEscape(dep)}
         <ul id='categories'></ul>
         <a class="origin" href='http://api.jquery.com/#{entry.slug}'>Original: api.jquery.com/#{entry.slug}</a>
       </div>
@@ -50,7 +53,7 @@ class jqapi.Templates
     """
     <li class='entry'>
       <ul class='signatures'></ul>
-      <div class='longdesc'>#{entry.longdesc}</div>
+      <div class='longdesc'>#{@htmlEscape(entry.longdesc)}</div>
       <ul class='examples clearfix'></ul>
     </li>
     """
@@ -59,7 +62,7 @@ class jqapi.Templates
     """
     <li class='signature'>
       <h2>
-        <span class='title'>#{title}</span>
+        <span class='title'>#{@htmlEscape(title)}</span>
         <span class='return'>&rarr; #{ret}</span>
         <span class='version'>#{version}</span>
       </h2>
@@ -88,7 +91,7 @@ class jqapi.Templates
       def = "( default: <code>#{arg.default}</code> )"
 
     if $.isArray arg.type
-      for a in arg.type        
+      for a in arg.type
         argt.push a.name
     else
       argt = [arg.type]
@@ -105,24 +108,24 @@ class jqapi.Templates
 
   propertyItem: (prop) ->
     def = ""
-    added = "" 
+    added = ""
     types = []
     args = []
     ret = ""
 
-    if prop.default? 
+    if prop.default?
       def = "(default: <code>#{prop.default}</code>)"
 
-    if prop.added? 
+    if prop.added?
       added = """
         <strong>
-         ( version added: 
+         ( version added:
           <a href="//api.jquery.com/category/version/#{prop.added}/">#{prop.added}</a> )
         </strong>
       """
 
     if $.isArray prop.type
-      for t in prop.type        
+      for t in prop.type
         types.push t.name
     else
       types = [prop.type]
@@ -133,15 +136,15 @@ class jqapi.Templates
     types = types.join ', '
 
     if prop.argument?
-      for a in prop.argument                
+      for a in prop.argument
         args.push "<a href='//api.jquery.com/Types##{a.type}'>#{a.type}</a> #{a.name}"
       args = "( #{args.join ', '} )"
-    else 
+    else
       args = ""
 
     if prop.return?
       ret = " => <a href='//api.jquery.com/Types##{prop.return.type}'>#{prop.return.type}</a>"
-      
+
     """
     <tr class="property"><td colspan=3>
       <div>
@@ -151,9 +154,9 @@ class jqapi.Templates
       <div>
         Type: #{types} #{args}#{ret}
       </div>
-      <div class="desc">#{prop.desc} #{added}</div>      
+      <div class="desc">#{prop.desc} #{added}</div>
 
-    </td></tr>   
+    </td></tr>
     """
 
   examplesItem: (example) ->

@@ -22,6 +22,7 @@ class jqapi.Categories
       $.get 'docs/toc.html', (html) =>
         data = @getNavigation html                        # and parse the data out from that html when loaded
         $(html).appendTo @el
+        jqapi.events.trigger 'index:done', [data]         # let the app know that the index is loaded
 
     else
       $.getJSON 'docs/index.json', (data) =>              # load the index json data with all categories and entries

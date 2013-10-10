@@ -8,37 +8,31 @@
 - I created Git tag "cp1" to mark where I abandoned the idea of doing it the right way,
   in case I ever have time or the skill to go back and refactor.
 
-
-
-
 ### Strategy
 
-- I am working on manually "rebasing" my changes from the dtdanalyzer branch (see below)
-  onto the latest and greatest master branch from jqapi/jqapi, into the "jats" branch.
-- Use the development server for dev/testing - keep this functional at all stages
+* Goal:  use the exact same code base to serve either the original jqapi documentation
+  set (docset) or the JATS tag library.
+* But not at the same time - you have to first run the appropriate steps to
+  initialize the documentation set files, which should land in the *docs* folder.
+* The default behavior will be to serve the original jqapi docset, and should work the
+  same as the original code, in every respect.
+
+- Use the development server (`thor dev:start`) for dev/testing - keep this functional at all stages
 - Don't change anything that doesn't need to be changed in the original code, esp. for
   aesthetic reasons.
-- Absolutely no reason to have the same server be able to serve both sets of documentation
-  at the same time.  Use an environment variable or command-line parameters to switch the
-  docs from one to another.
+- Use an environment variable or command-line parameters to switch to the jats
+  docset
 - "docs:download" and "docs:generate" shouldn't be implemented in *this* project for
-  the JATS documentation.  They should be implemented outside.
-- I need to be faithful to the original documentation's structure, so that means there
+  the JATS documentation.  They should be implemented outside.  Then, to serve it,
+  create a softlink from *docs* to that external directory.
+- I need to be faithful to the original JATS documentation's structure, so that means there
   will need to be a couple of major improvements to the jqapi code.  In particular:
-    - Headings are pages
+    - Headings in the navigation panel are also pages
     - How deeply are they nested?
     - Subheadings mixed in with pages (rather than putting them first)
 
 
 ### Work
-
-- Next up:
-    - Take the main content pane out of index.html/index.haml, and put it into
-      docs.  The reason is that index.haml really is the view, and should remain
-      as index.haml.  But, I don't want
-      to have to convert JATS tag library home pages into HAML.
-    - CSS and so forth should be parameterized, and put into the index.haml.
-      Eventually, docset-specific JS would also be implemented this way.
 
 - Other significant code changes in my old dtdanalyzer branch
     - tasks/deploy.thor
@@ -62,6 +56,8 @@
 ## dtdanalyzer branch
 
 This is the original work I did on this project, before restarting it in October.
+I think I have redone all the important work from this branch, now, so this should
+forever remain a dead-end branch.
 
 - ~/git/Klortho/jqapi-dtdanalyzer has the code where I last left off
 - Here are the changes I made in the dtdanalyzer branch:
@@ -80,13 +76,6 @@ This is the original work I did on this project, before restarting it in October
 
 ## Switching to the JATS documentation set
 
-The goals in implementing this were:
-
-* To use the exact same code base to serve either documentation set
-* But not at the same time - you have to first run the appropriate steps to
-  initialize the documentation set
-* To keep the default behavior the same as the original jqapi code worked in
-  every respect.
 
 ### Documentation set differences
 
