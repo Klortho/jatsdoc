@@ -19,7 +19,7 @@ jQuery ->                                                 # wait for dom ready
 
   for part in parts                                       # load the whole application parts
     new jqapi[part]                                       # initialize the part
-  
+
   winEl = $(window)
 
   winEl
@@ -30,5 +30,6 @@ jQuery ->                                                 # wait for dom ready
   winEl
     .on 'hashchange', ->                                  # on hash change, happens in entry load
       slug = $.bbq.getState('p')                          # slug of requested entry
+      console.info("C.  got state " + slug)
       jqapi.events.trigger 'entry:load', [slug] if slug   # if the slug is set load the entry
     .trigger 'hashchange'                                 # initially kick it off

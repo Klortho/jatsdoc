@@ -8,6 +8,7 @@ class jqapi.Entry
       $('#entry-wrapper', @el).hide()
       @el.addClass 'loading'
       @loadContent slug                                   # find content via the slug
+      console.info("B. pushing state " + slug)
       $.bbq.pushState { p: slug }                         # set the new hash state with old #p= format
 
     jqapi.events.on 'window:resize', (e, winEl) =>        # on window resize event

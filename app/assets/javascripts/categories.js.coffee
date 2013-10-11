@@ -30,7 +30,7 @@ class jqapi.Categories
         jqapi.events.trigger 'index:done', [data]         # let the app know that the index is loaded
 
 
-    @el.on 'click', '.top-cat-name, .sub-cat-name', ->    # on clicking a category header
+    @el.on 'click', '.has-kids > .top-cat-name, .has-kids > .sub-cat-name', ->    # on clicking a category header
       self.toggleCategory $(@).parent()                   # toggle the category
       jqapi.events.trigger 'search:focus'                 # set the lost focus on the search field
 

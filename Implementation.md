@@ -3,9 +3,10 @@
 ## Contents
 
 * [Miscellaneous notes](#miscellaneous-notes)
-* [Tools](#tools)
 * [Project directory layout](#project-directory-layout)
 * [Navigation panel](#navigation-panel)
+* [Events](#events)
+* [Tools](#tools)
 
 
 ## Project directory layout
@@ -165,6 +166,65 @@ via ajax from *docs/index.json*.  It built an HTML structure like this:
   </li>
 </ul>
 ```
+
+
+## Events
+
+* categories:toggle
+* entries:load
+* entry:done
+* entry:load
+* index:done
+* navigate:down
+* navigate:enter
+* navigate:up
+* navigation:done
+* search:clear
+* search:done
+* search:empty
+* search:focus
+* window:resize
+
+
+### Managing hash state, loading entries
+
+An onclick handler is set in *entries.js.coffee*, that responds to clicks within the
+div#sidebar-content on any of the navigation items:
+
+```coffee
+@el.on 'click', '.entry,.top-cat,.sub-cat', ->
+  self.loadEntry $(@)
+```
+
+Inside that event handler, `bbq.pushState` is called, which causes the browser
+address to get the "#p=*slug*" added to it, and triggering a hashchange event:
+
+```coffee
+$.bbq.pushState { p: el.data('slug') }
+```
+
+In *init.js.coffee*, an event handler is set up for a hashchange event, that
+in turn propogates an `entry:load` event:
+
+```coffee
+.on 'hashchange', ->                                  # on hash change, happens in entry load
+  slug = $.bbq.getState('p')                          # slug of requested entry
+  jqapi.events.trigger 'entry:load', [slug] if slug   # if the slug is set load the entry
+```
+
+In *entry.js.coffee*, a handler is set up for this event, that causes the content to
+be loaded:
+
+```coffee
+jqapi.events.on 'entry:load', (e, slug) =>            # entry content must be loaded on this event
+  ...
+  @loadContent slug                                   # find content via the slug
+  $.bbq.pushState { p: slug }                         # set the new hash state with old #p= format
+```
+
+Note that in the above sequence, `$.bbq.pushState()` gets called twice with the same
+value, but it doesn't seem to do any harm.
+
 
 
 ## Tools
