@@ -11,7 +11,6 @@ module Jqapi
   ].freeze
 
   class Server < Sinatra::Base
-    set :docset, $docset   # which set of documentation to serve
     set :root, File.join(File.dirname(__FILE__), '..')
     set :views, File.join(root, 'app/views')
     set :sprockets, Sprockets::Environment.new(root)
@@ -29,32 +28,13 @@ module Jqapi
       content_type :json
     end
 
-    get '/docs/categories.json' do
-      serve_file('docs', 'categories.json')
-    end
-
-    get '/docs/index.json' do
-      serve_file('docs', 'index.json')
-    end
-
     # This takes care of HTML files anywhere under docs, including subdirectories
     # like, e.g., /docs/entries/how-to-use.html.
     get '/docs/*.html' do
-      if settings.docset == 'jats'
-        content_type :html
-        serve_file('docs', "#{params[:splat][0]}.html")
-      end
+      content_type :html
+      serve_file('docs', "#{params[:splat][0]}.html")
     end
 
-
-
-    get '/docs/versions.json' do
-      serve_file('docs', 'versions.json')
-    end
-
-    get '/docs/entries/*.json' do
-      serve_file('docs/entries', "#{params[:splat][0]}.json")
-    end
 
     get 'resources/*.png' do
       content_type 'image/png'
@@ -77,13 +57,8 @@ module Jqapi
     end
 
     get '/' do
-      if settings.docset == 'jats'
-        content_type :html
-        serve_file('docs', 'index.html')
-      else  # default is jqapi
-        content_type :html
-        haml :index
-      end
+      content_type :html
+      serve_file('docs', 'index.html')
     end
 
 
