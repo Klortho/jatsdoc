@@ -20,21 +20,11 @@ class jqapi.Entry
       document.title = "#{entry.title} - jQAPI"           # set a new title
 
   loadContent: (slug) ->
-    # Switch between loading the content as HTML vs. JSON
-    if $('body').attr('data-docset-type') == "html"
-      console.info("Fleegle")
-      $.get "docs/entries/#{slug}.html", (data) =>          # fetch from an html file
-        data.slug = slug
-        @parseHtmlEntry data                                    # parse what was received
-        jqapi.events.trigger 'entry:done', [data]           # let the app know that a new entry is loaded
-        @el.removeClass 'loading'
-
-    else
-      $.getJSON "docs/entries/#{slug}.json", (data) =>     # fetch from json file
-        data.slug = slug
-        @parseEntry data                                    # parse what was received
-        jqapi.events.trigger 'entry:done', [data]           # let the app know that a new entry is loaded
-        @el.removeClass 'loading'
+    $.get "docs/entries/#{slug}.html", (data) =>          # fetch from an html file
+      data.slug = slug
+      @parseHtmlEntry data                                    # parse what was received
+      jqapi.events.trigger 'entry:done', [data]           # let the app know that a new entry is loaded
+      @el.removeClass 'loading'
 
   parseHtmlEntry: (entry) ->
     @el.html entry

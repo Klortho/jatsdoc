@@ -16,14 +16,18 @@ body
   clear: both
   height: 0
 
-#intro
-  p
-    a
-      color: red
-      text-decoration: none
+a
+  color: red
+  text-decoration: none
 
-      &:hover
-        text-decoration: underline
+  &:hover
+    color: red
+    text-decoration: underline
+
+#intro
+  padding: 15px
+
+
 
 #donors
   ul
@@ -42,12 +46,7 @@ body
         display: block
 
         a
-          color: red
           font-size: 0.9em
-          text-decoration: none
-
-          &:hover
-            text-decoration: underline
 
       a
         color: black
@@ -110,44 +109,6 @@ body
     font-size: 1.28em
     line-height: 20px
 
-    a
-      color: red
-      text-decoration: none
-
-      &:hover
-        color: red
-        text-decoration: underline
-
-#changelog
-  position: relative
-
-  a
-    color: red
-    text-decoration: none
-
-    &:hover
-      text-decoration: underline
-
-  a#follow
-    position: absolute
-    top: 55px
-    right: 15px
-    font-size: 1.28em
-
-  ul
-    padding: 15px
-    list-style: none
-    line-height: 18px
-    font-size: 1.28em
-
-    li
-      position: relative
-      padding-left: 100px
-
-      span
-        position: absolute
-        left: 0
-        color: #666
 
 #download
   .row
@@ -163,14 +124,6 @@ body
 
     &:hover
       text-decoration: underline
-
-  #zip
-    a
-      background: url('download_zip.png') top center no-repeat
-
-  #air
-    a
-      background: url('download_air.png') top center no-repeat
 
   #git
     a

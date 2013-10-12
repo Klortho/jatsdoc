@@ -17,17 +17,11 @@ class jqapi.Categories
 
 
     # Switch between loading the navigation content as HTML vs. JSON
-    if $('body').attr('data-docset-type') == "html"
-      # load the index html file with all categories and entries
-      $.get 'docs/toc.html', (html) =>
-        data = @getNavigation html                        # and parse the data out from that html when loaded
-        $(html).appendTo @el
-        jqapi.events.trigger 'index:done', [data]         # let the app know that the index is loaded
-
-    else
-      $.getJSON 'docs/index.json', (data) =>              # load the index json data with all categories and entries
-        @buildNavigation data                             # and build from the object when loaded
-        jqapi.events.trigger 'index:done', [data]         # let the app know that the index is loaded
+    # load the index html file with all categories and entries
+    $.get 'docs/toc.html', (html) =>
+      data = @getNavigation html                        # and parse the data out from that html when loaded
+      $(html).appendTo @el
+      jqapi.events.trigger 'index:done', [data]         # let the app know that the index is loaded
 
 
     @el.on 'click', '.has-kids > .top-cat-name, .has-kids > .sub-cat-name', ->    # on clicking a category header

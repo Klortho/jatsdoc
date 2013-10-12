@@ -42,7 +42,7 @@ module Jqapi
     get '/docs/*.html' do
       if settings.docset == 'jats'
         content_type :html
-        serve_file('docs-jats', "#{params[:splat][0]}.html")
+        serve_file('docs', "#{params[:splat][0]}.html")
       end
     end
 
@@ -79,9 +79,7 @@ module Jqapi
     get '/' do
       if settings.docset == 'jats'
         content_type :html
-        # Serving from `docs-jats` is temporary, during migration.  Eventually, the
-        # JATS documentation will be built in the same `docs` directory as the jqapi docs.
-        serve_file('docs-jats', 'index.html')
+        serve_file('docs', 'index.html')
       else  # default is jqapi
         content_type :html
         haml :index
