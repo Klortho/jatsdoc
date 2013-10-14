@@ -39,8 +39,8 @@ it with a softlink named *docs*.
 
     bundle exec rackup
 
-Point your browser to localhost:9292 and there you have the latest jQuery documentation with jQAPI
-wrapped around.
+Point your browser to http://localhost:9292 and there you have the latest jQuery
+documentation with jQAPI wrapped around.
 
 ### Generate static files (standalone version)
 

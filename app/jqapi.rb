@@ -28,6 +28,11 @@ module Jqapi
       content_type :json
     end
 
+    get '/' do
+      content_type :html
+      serve_file('docs', 'index.html')
+    end
+
     # This takes care of HTML files anywhere under docs, including subdirectories
     # like, e.g., /docs/entries/how-to-use.html.
     get '/docs/*.html' do
@@ -54,11 +59,6 @@ module Jqapi
     get 'LICENSE' do
       content_type 'text'
       serve_file('', 'LICENSE')
-    end
-
-    get '/' do
-      content_type :html
-      serve_file('docs', 'index.html')
     end
 
 
