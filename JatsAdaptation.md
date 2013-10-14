@@ -74,16 +74,6 @@ forever remain a dead-end branch.
 
 
 
-## Switching to the JATS documentation set
-
-
-### Documentation set differences
-
-In the JATS documentation set:
-
-* The main home page will be served directly as *index.html*, rather than generated
-  from *index.haml*.  So, I took it out of *app/views*, and put it with the rest of
-  the static HTML files, in *docs* (for now, in *docs-jats*).
 
 ## Running the dev server
 

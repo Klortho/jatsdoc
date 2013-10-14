@@ -16,10 +16,7 @@ the JATS Tag Library.
 ## Development
 
 The development environment consists of a Sinatra server and a Thor
-tool belt.
-
-Served with Sprockets we can use CoffeeScript and SASS. Views are
-written in HAML.
+tool belt.  Uses CoffeeScript and SASS.
 
 ### Install prerequisites
 
@@ -33,16 +30,10 @@ Then install all the other Gems:
 
     bundle install
 
-### Generate the documentation
+### Link to the documentation
 
-The following downloads the official jQuery documentation from GitHub, and
-puts it into the *tmp* directory.
-
-    thor docs:download
-
-This converts the documentation into the JSON format required by this library:
-
-    thor docs:generate
+You'll need to generate a documentation set in the correct format, and link to
+it with a softlink named *docs*.
 
 ### Start the dev server
 

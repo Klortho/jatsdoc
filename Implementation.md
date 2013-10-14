@@ -12,7 +12,6 @@
 ## Project directory layout
 
 ```
-├── air - Adobe air app.  I [cfm] don't know anything about this.
 ├── app
 │   ├── assets
 │   │   ├── images
@@ -28,9 +27,7 @@
 │   │       │     including the library file reset.css
 │   │       ├── categories.css.sass
 │   │       ├── ... various sass sources
-│   ├── jqapi.rb - this is the main application ruby file, it maps all the URLs
-│   └── views
-│       └── index.haml - the top-level view
+│   └── jqapi.rb - this is the main application ruby file, it maps all the URLs
 ├── config.ru - config file for rackup; top-level configuration that defines the application.
 │     This "requires" app/jqapi.rb
 ├── Gemfile - defines all the dependencies
@@ -92,7 +89,7 @@ the *docs* directory:
 
 ```
 └── public
-    ├── index.html - main content on the home page; built from index.haml
+    ├── index.html
     ├── LICENSE
     ├── README.md
     ├── assets
@@ -102,14 +99,6 @@ the *docs* directory:
     │   │     but the changes are minimal
     │   ├── arrow.png
     │   └── ... various images and tools originally from assets
-    ├── docs
-    │   ├── index.json - left-side navigation bar; nothing to do with index.haml.
-    │   ├── categories.json
-    │   ├── versions.json
-    │   └── entries
-    │       ├── addBack.json
-    │       ├── ... lots and lots of .json files
-    │       └── wrap.json
     └── resources
         ├── 0042_04_01.png
         ├── ... lots of .pngs
