@@ -37,7 +37,7 @@ it with a softlink named *docs*.
 
 ### Start the dev server
 
-    thor dev:start
+    bundle exec rackup
 
 Point your browser to localhost:9292 and there you have the latest jQuery documentation with jQAPI
 wrapped around.
