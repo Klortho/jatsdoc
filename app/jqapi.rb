@@ -35,7 +35,7 @@ module Jqapi
 
     # This takes care of HTML files anywhere under docs, including subdirectories
     # like, e.g., /docs/entries/how-to-use.html.
-    get '/docs/*.html' do
+    get '/*.html' do
       content_type :html
       serve_file('docs', "#{params[:splat][0]}.html")
     end

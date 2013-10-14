@@ -61,25 +61,15 @@ to a documentation set that is generated externally, and must have this structur
         └── ... content-specific images
 ```
 
-`thor deploy:generate` then shuffles things around quite a bit, putting results into the
-*public* directory:
+`thor deploy:generate` puts the library files into the *public* directory:
 
 ```
 └── public
-    ├── index.html - main page
-    ├── docs
-    │   ├── toc.html - the left-hand navigation panel
-    │   └── entries
-    │       └── ... an html page for each of the entries
     ├── LICENSE
     ├── README.md
-    ├── assets
-    │   ├── bundle.css - this was bundled up and moved here, includes a bunch of library js's
-    │   ├── bundle.js - this was bundled up and moved here, includes library reset.css ?
-    │   ├── arrow.png
-    │   └── ... various images and tools originally from assets
-    └── resources
-        └── ... images from docs/resources
+    ├── bundle.css - this was bundled up and moved here, includes a bunch of library js's
+    ├── bundle.js - this was bundled up and moved here, includes library reset.css ?
+    └── ... images and tools originally from assets/images
 ```
 
 
