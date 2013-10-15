@@ -24,9 +24,6 @@ module Jqapi
       end
     end
 
-    before do
-      content_type :json
-    end
 
     get '/' do
       content_type :html
@@ -40,21 +37,15 @@ module Jqapi
       serve_file('docs', "#{params[:splat][0]}.html")
     end
 
-
-    get 'resources/*.png' do
-      content_type 'image/png'
-      serve_file('docs/resources', "#{params[:splat][0]}.png")
+    get '/resources/*' do
+      send_file "docs/resources/#{params[:splat][0]}"
     end
 
-    get 'resources/*.jpg' do
-      content_type 'image/jpeg'
-      serve_file('docs/resources', "#{params[:splat][0]}.jpg")
-    end
 
-    get 'resources/*.gif' do
-      content_type 'image/gif'
-      serve_file('docs/resources', "#{params[:splat][0]}.gif")
-    end
+
+
+
+
 
     get 'LICENSE' do
       content_type 'text'

@@ -3,7 +3,7 @@ class Deploy < Thor
 
   def generate
     sprockets = Sprockets::Environment.new('')
-    deploy_path = 'public'
+    deploy_path = 'jatsdoc'
 
     Jqapi::ASSET_PATHS.each do |path|
       puts "appending #{path}"

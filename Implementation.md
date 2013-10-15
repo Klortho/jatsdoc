@@ -61,10 +61,10 @@ to a documentation set that is generated externally, and must have this structur
         └── ... content-specific images
 ```
 
-`thor deploy:generate` puts the library files into the *public* directory:
+`thor deploy:generate` puts the library files into the *jatsdoc* directory:
 
 ```
-└── public
+└── jatsdoc
     ├── LICENSE
     ├── README.md
     ├── bundle.css - this was bundled up and moved here, includes a bunch of library js's
