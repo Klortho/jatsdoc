@@ -14,7 +14,7 @@ module Jqapi
     set :root, File.join(File.dirname(__FILE__), '..')
     set :views, File.join(root, 'app/views')
     set :sprockets, Sprockets::Environment.new(root)
-    set :precompile, [/\w+\.(?!js|css).+/, /bundle.(css|js)$/]
+    set :precompile, [/\w+\.(?!js|css).+/, /jatsdoc.(css|js)$/]
     set :assets_prefix, 'assets'
     set :assets_path, File.join(root, 'public', assets_prefix)
 
@@ -40,11 +40,6 @@ module Jqapi
     get '/resources/*' do
       send_file "docs/resources/#{params[:splat][0]}"
     end
-
-
-
-
-
 
 
     get 'LICENSE' do

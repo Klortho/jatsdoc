@@ -14,11 +14,11 @@ class Deploy < Thor
     FileUtils.rm_rf "#{deploy_path}"
     Dir.mkdir(deploy_path)
 
-    puts "Generate (and minify) bundle.css"
-    sprockets.find_asset('bundle.css').write_to "#{deploy_path}/bundle.css"
+    puts "Generate (and minify) jatsdoc.css"
+    sprockets.find_asset('jatsdoc.css').write_to "#{deploy_path}/jatsdoc.css"
 
-    puts "Generate (and minify) bundle.js"
-    sprockets.find_asset('bundle.js').write_to "#{deploy_path}/bundle.js"
+    puts "Generate (and minify) jatsdoc.js"
+    sprockets.find_asset('jatsdoc.js').write_to "#{deploy_path}/jatsdoc.js"
 
     puts 'Copy images'
     %x[cp -r app/assets/images/** #{deploy_path}/]

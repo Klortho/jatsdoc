@@ -19,12 +19,12 @@
 │       │   ├── arrow.png
 │       │   └── ... various images and icons
 │       ├── javascripts
-│       │   ├── bundle.js.coffee - master file that "requires" all of the others,
+│       │   ├── jatsdoc.js.coffee - master file that "requires" all of the others,
 │       │   │     including library files that aren't in this directory
 │       │   ├── categories.js.coffee
 │       │   └── ... other coffeescript sources
 │       └── stylesheets
-│           ├── bundle.css.sass - master file that "requires" all of the others,
+│           ├── jatsdoc.css.sass - master file that "requires" all of the others,
 │           │     including the library file reset.css
 │           ├── categories.css.sass
 │           └── ... other sass sources
@@ -67,8 +67,8 @@ to a documentation set that is generated externally, and must have this structur
 └── jatsdoc
     ├── LICENSE
     ├── README.md
-    ├── bundle.css - this was bundled up and moved here, includes a bunch of library js's
-    ├── bundle.js - this was bundled up and moved here, includes library reset.css ?
+    ├── jatsdoc.css - this was bundled up and moved here, includes a bunch of library js's
+    ├── jatsdoc.js - this was bundled up and moved here, includes library reset.css ?
     └── ... images and tools originally from assets/images
 ```
 
