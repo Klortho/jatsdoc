@@ -1,4 +1,4 @@
-# Jatsdoc Documentation Browser
+﻿# Jatsdoc Documentation Browser
 
 This is a documentation browser library, developed in Ruby on Rails, that is
 derived from [jqapi](https://github.com/jqapi/jqapi).
@@ -88,6 +88,35 @@ to:
 * Include a small set of test/sample documentation files in the docs directory of
   the github repository.  When this is done, we'll need to include instructions about
   how to switch to another docset by changing the values in *jqapi.rb*
+
+* Polish the styles in the nav panel, regarding the nested categories and entries.
+  See the [JatsAdaptation](JatsAdaptation#Accomodate different document structure)
+  page for an explanation.
+    - See http://api.rubyonrails.org/ for an example of how to fix
+      the navigation pane styles
+    - There's not enough visual distinction between a subcategory that is not
+      expanded, and a blue row.  See "Common Tagging Practice" →
+      "Tagging References", for example.
+    - It's also not easy enough to see the hierarchy, where the "Tagging References"
+      kids leave off and the siblings begin.
+    - It would also be really nice to have a little miniature arrow on the subcategory
+      boxes.
+    - The arrow sprite needs more vertical separation.  If you shrink the window till
+      "Document Hierarchy Diagrams" wraps, for example, you can see the other arrows
+      underneath the real one.
+    - Add some distinguishing styles for {top-cat open} and {sub-cat open}.  There
+      are four different states that should be easy to distinguish; combinations of
+      'active' and 'open'
+
+* Implement a version number.  This should show up in the deploy directory (i.e.
+  "jatsdoc-1.0" instead of just "jatsdoc".
+
+
+## See also
+
+* [GitHub Klortho/JatsTagLibrary](https://github.com/Klortho/JatsTagLibrary) -
+  This will be the source of the *content* for the documentation.
+
 
 
 ## License

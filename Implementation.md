@@ -2,7 +2,6 @@
 
 ## Contents
 
-* [Miscellaneous notes](#miscellaneous-notes)
 * [Project directory layout](#project-directory-layout)
 * [Navigation panel](#navigation-panel)
 * [Events](#events)
@@ -12,6 +11,9 @@
 ## Project directory layout
 
 ```
+├── README.md
+├── config.ru - config file for rackup; top-level configuration that defines the application.
+│     This "requires" app/jqapi.rb
 ├── app
 │   ├── jqapi.rb - this is the main application ruby file, it maps all the URLs
 │   └── assets
@@ -28,14 +30,11 @@
 │           │     including the library file reset.css
 │           ├── categories.css.sass
 │           └── ... other sass sources
-├── config.ru - config file for rackup; top-level configuration that defines the application.
-│     This "requires" app/jqapi.rb
 ├── Gemfile - defines all the dependencies
 ├── LICENSE
-├── README.md
 ├── tasks
-│   ├── deploy.thor - defines a generate task, that minifies css and js, copies all the files
-│   │     and framework, to create a standalone version
+│   ├── deploy.thor - defines a generate task, that minifies css and js, copies asset
+│   │     files, to create the standalone version in *jatsdoc* (described below).
 │   └── requires.thor - "horrible hack" - this is included by the others.
 └── vendor - third party libraries
     └── assets
@@ -65,8 +64,8 @@ to a documentation set that is generated externally, and must have this structur
 
 ```
 └── jatsdoc
-    ├── LICENSE
     ├── README.md
+    ├── LICENSE
     ├── jatsdoc.css - this was bundled up and moved here, includes a bunch of library js's
     ├── jatsdoc.js - this was bundled up and moved here, includes library reset.css ?
     └── ... images and tools originally from assets/images
