@@ -1,52 +1,77 @@
+$subheaderfont: "Bitstream Vera Serif", "Liberation Serif", Georgia, serif
+
 #entry
   overflow-y: scroll
   overflow-x: auto
   height: 400px
+
+  tt
+    font-family: monospace
 
   &.loading
     background: url('loader.gif') no-repeat center center
 
   #entry-wrapper
     padding: 20px 30px
-
-  a.original
-    font-size: 1.2em
-    float: right
-    text-decoration: none
-    color: #777
-
-    &:hover
-      text-decoration: underline
-      color: #555
-
-  h1
-    font-size: 3.2em
-    margin-bottom: 16px
-
-  p
-    margin-bottom: 18px
     line-height: 21px
     font-size: 1.4em
 
-  div.definition
-    font-family: "Bitstream Vera Serif", "Liberation Serif", Georgia, serif
-    font-style: italic
-    color: #777
-    padding-right: 50px
-    line-height: 20px
+    a.original
+      font-size: 0.9em
+      float: right
+      text-decoration: none
+      color: #777
 
-  ul
-    margin-bottom: 18px
-    line-height: 21px
-    font-size: 1.4em
-    list-style: disc outside none
-    padding-left: 2em
+      &:hover
+        text-decoration: underline
+        color: #555
+
+    h1
+      font-size: 2.3em
+      line-height: 1.2em
+      margin-bottom: 16px
+
+    p
+      margin-bottom: 12px
+
+    div.definition
+      font-family: $subheaderfont
+      font-style: italic
+      color: #777
+      padding-right: 50px
+      line-height: 20px
+
+    ul
+      margin-bottom: 12px
+      list-style: disc outside none
+      padding-left: 2em
 
 
-  h3
-    font-family: Georgia
-    font-size: 2.2em
-    margin-bottom: 16px
+    h3
+      font-family: $subheaderfont
+      font-size: 1.6em
+      margin-bottom: 16px
+
+    .deflisttable
+      margin-bottom: 12px
+      border-collapse: collapse
+
+      td
+        border-top: thin groove
+        border-bottom: thin groove
+        padding-top: .25em
+        padding-bottom: .25em
+
+        p
+          margin: 0
+
+      .dterm
+        font-weight: bold
+        text-align: right
+        padding-right: .8em
+
+      .row1
+        background-color: #CFEFCF
 
 
 
@@ -54,8 +79,7 @@
 
 
 
-
-
+  /* None of the stuff below is used */
 
   #entries
     li.entry
