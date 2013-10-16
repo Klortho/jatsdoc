@@ -5,7 +5,12 @@ derived from [jqapi](https://github.com/jqapi/jqapi).
 
 ## Contents
 
-* [Development](#development) - below
+* This page
+    * [Development](#development)
+    * [Deployment](#deployment)
+    * [To do list](#to-do-list)
+    * [See also](#see-also)
+    * [License](#license)
 * [Implementation.md](Implementation.md) - notes about how it all works (from a Ruby newbie)
 * [JatsAdaptation.md](JatsAdaptation.md) - info about the JATS adaptation effort, including list
   of major changes, to do list, etc.
@@ -84,6 +89,16 @@ to:
 
 
 ## To do list
+
+* Search needs to support matching headers ("categories" and "subcategories").  Right
+  now, you only see the matching leaf nodes ("entries").
+
+* Figure out how to link to targets within an entry.  Because we're using the fragment
+  identifier to specify the entry itself, we'll need something like
+  "#p=entry;t=target".
+
+* When you reload an page (F5), the navigation panel should open to show the page
+  you are on.
 
 * Include a small set of test/sample documentation files in the docs directory of
   the github repository.  When this is done, we'll need to include instructions about
