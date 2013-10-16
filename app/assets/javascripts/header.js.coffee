@@ -4,8 +4,8 @@ class jqapi.Header
     @signaturesEl = $('#signatures-nav', @el)             # signatures navigation list
     self          = @
 
-    jqapi.events.on 'entry:done', (e, entry) =>           # when there is a new entry loaded
-      @updateSignatureNav entry                           # update the header signatures navigation
+    #jqapi.events.on 'entry:done', (e, entry) =>           # when there is a new entry loaded
+    #  @updateSignatureNav entry                           # update the header signatures navigation
 
     @el.on 'click', '#signatures-nav a', ->               # it's the o again
       sigText  = $.trim($(@).text())                      # hacked together, use events instead

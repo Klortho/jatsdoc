@@ -22,6 +22,8 @@ class jqapi.Entry
       @el.removeClass 'loading'
 
   parseHtmlEntry: (entry) ->
-    @el.html entry
+    footer = @el.find(".footer")                          # Save the footer
+    @el.html entry                                        # Replace the entry content
+    @el.append(footer)                                    # Restore the footer
     document.title = $(entry).find("h1").text()
 
