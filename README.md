@@ -100,10 +100,6 @@ to:
 * When you reload an page (F5), the navigation panel should open to show the page
   you are on.
 
-* Fix back-button / reload when you go back to the home page.  I.e., when you start at
-  http://chrismaloney.org/archiving-1.0/, click "Elements", and then click the back
-  button.  The "entry" doesn't go back to the home page entry.
-
 * Include a small set of test/sample documentation files in the docs directory of
   the github repository.  When this is done, we'll need to include instructions about
   how to switch to another docset by changing the values in *jqapi.rb*

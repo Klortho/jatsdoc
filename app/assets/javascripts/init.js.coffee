@@ -29,6 +29,5 @@ jQuery ->                                                 # wait for dom ready
   winEl
     .on 'hashchange', ->                                  # on hash change, happens in entry load
       slug = $.bbq.getState('p')                          # slug of requested entry
-      console.info("C.  got state " + slug)
-      jqapi.events.trigger 'entry:load', [slug] if slug   # if the slug is set load the entry
+      jqapi.events.trigger 'entry:load', [slug]           # load the entry, even if the slug is not defined
     .trigger 'hashchange'                                 # initially kick it off

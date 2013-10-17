@@ -5,7 +5,6 @@ class jqapi.Entries
     @currentEl = $ {}                                     # keep track of the current entry
 
     @el.on 'click', 'span.title,.top-cat-name,.sub-cat-name', ->    # on clicking a single entry
-      console.info("tag name is " + $(@).prop("tagName"))
       $this = $(@)
       li = if ($this.prop("tagName") == "LI") then $this else $this.parent()
       self.loadEntry li
@@ -23,6 +22,5 @@ class jqapi.Entries
 
       @currentEl = el                                     # cache current entry
 
-      console.info("in Entries.loadEntry: pushing state " + el.data('slug'))
       $.bbq.pushState { p: el.data('slug') }              # update the hash to trigger entry loading
       jqapi.events.trigger 'search:focus'                 # set the lost focus on the search field
