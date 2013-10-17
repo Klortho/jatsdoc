@@ -5,7 +5,7 @@ class jqapi.Entry
 
     jqapi.events.on 'entry:load', (e, slug) =>            # entry content must be loaded on this event
       @el.scrollTop 0                                     # scroll the element back to top
-      $('#entry-wrapper', @el).hide()
+      $('#entry-wrapper, #footer', @el).hide()
       @el.addClass 'loading'
       @loadContent slug                                   # find content via the slug
       $.bbq.pushState { p: slug }                         # set the new hash state with old #p= format
@@ -22,8 +22,9 @@ class jqapi.Entry
       @el.removeClass 'loading'
 
   parseHtmlEntry: (entry) ->
-    footer = @el.find(".footer")                          # Save the footer
+    footer = @el.find("#footer")                          # Save the footer
     @el.html entry                                        # Replace the entry content
     @el.append(footer)                                    # Restore the footer
+    footer.show()
     document.title = $(entry).find("h1").text()
 
