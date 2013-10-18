@@ -15,7 +15,7 @@ class jqapi.Entry
     jqapi.events.on 'entry:load', (e, slug) =>            # entry content must be loaded on this event
       if @first_time
         @first_time = false
-        return
+        return if !slug
 
       @el.scrollTop 0                                     # scroll the element back to top
 

@@ -3,6 +3,11 @@
 This is a documentation browser library, developed in Ruby on Rails, that is
 derived from [jqapi](https://github.com/jqapi/jqapi).
 
+It was adapted in order to serve DTD documentation such as the [JATS Tag
+Library](http://jats.nlm.nih.gov/archiving/tag-library/1.0/).  See also the
+[JatsTagLibrary GitHub project](https://github.com/Klortho/JatsTagLibrary) for the
+documentation *content*.
+
 ## Contents
 
 * This page
@@ -133,9 +138,16 @@ to:
   This will be the source of the *content* for the documentation.
 
 
+## Credits and license
 
-## License
+The [jQAPI software](https://github.com/jqapi/jqapi) is released under MIT and GPL
+licenses, the full text of which can be found in the [LICENSE]() file here.
 
-Released under MIT & GPL. Coded by Sebastian Senf. http://twitter.com/mustardamus
+Thanks to [Sebastian Senf](http://mustardamus.com/) and others (see [credits
+here](http://jqapi.com/)) for producing such nice software.
 
-Code contributed by Chris Maloney is in the public domain.
+Contributions from Chris Maloney are, to the extent permissible by law, in the
+[public domain](http://creativecommons.org/publicdomain/zero/1.0/).
+
+
+

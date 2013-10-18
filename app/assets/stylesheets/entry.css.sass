@@ -1,4 +1,5 @@
 $subheaderfont: "Bitstream Vera Serif", "Liberation Serif", Georgia, serif
+$monofont: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace
 
 #entry
   overflow-y: scroll
@@ -6,7 +7,7 @@ $subheaderfont: "Bitstream Vera Serif", "Liberation Serif", Georgia, serif
   height: 400px
 
   tt
-    font-family: monospace
+    font-family: $monofont
 
   &.loading
     background: url('loader.gif') no-repeat center center
@@ -17,13 +18,16 @@ $subheaderfont: "Bitstream Vera Serif", "Liberation Serif", Georgia, serif
     line-height: 21px
     font-size: 1.4em
 
-    a.original
+    a
+      text-shadow: 0px 0px 0.95px #005
+
+    .original
       font-size: 0.9em
       float: right
       text-decoration: none
       color: #777
 
-      &:hover
+      a:hover
         text-decoration: underline
         color: #555
 
@@ -39,7 +43,7 @@ $subheaderfont: "Bitstream Vera Serif", "Liberation Serif", Georgia, serif
       font-family: $subheaderfont
       font-style: italic
       font-size: 1.2em
-      color: #888
+      color: #666
       padding-right: 50px
       line-height: 20px
 
@@ -47,6 +51,9 @@ $subheaderfont: "Bitstream Vera Serif", "Liberation Serif", Georgia, serif
       margin-bottom: 12px
       list-style: disc outside none
       padding-left: 2em
+
+      ul
+        list-style: circle
 
     h2
       font-size: 1.6em
@@ -65,7 +72,8 @@ $subheaderfont: "Bitstream Vera Serif", "Liberation Serif", Georgia, serif
       font-size: 1.1em
       font-weight: bold
       font-style: italic
-      margin-bottom: 16px
+      margin-top: 15px
+      margin-bottom: 13px
 
     .deflisttable
       margin-bottom: 12px
@@ -96,10 +104,25 @@ $subheaderfont: "Bitstream Vera Serif", "Liberation Serif", Georgia, serif
       border: 1px solid black
 
     .elementtag
-      font-family: monospace
+      font-family: $monofont
 
     .elementname
       font-weight: bold
+
+    .attrtag
+      font-family: $monofont
+
+    .attrname
+      font-weight: bold
+
+    ul.attrlist
+      margin-bottom: 12px
+      list-style: none
+      padding-left: 1em
+
+      li
+        margin-bottom: .3em
+
 
     em
       font-style: italic
@@ -107,7 +130,19 @@ $subheaderfont: "Bitstream Vera Serif", "Liberation Serif", Georgia, serif
     strong
       font-weight: bold
 
+    pre, p.contentdesc
+      font-family: $monofont
+      font-size: 13px
+      overflow: auto
+      text-shadow: .5px .5px 0 #222
+      background: #EEE
+      padding: 5px
+      border-radius: 4px
+      margin-left: .5em
+      margin-bottom: 12px
 
+    pre.taggedtext strong
+      background-color: white
 
   /* None of the stuff below is used */
 
@@ -132,81 +167,6 @@ $subheaderfont: "Bitstream Vera Serif", "Liberation Serif", Georgia, serif
         .third
           width: 33%
 
-      .longdesc
-        padding: 30px
-
-        h2, h4
-          font-size: 2em
-          margin: 12px 0 18px 0
-
-        p:last-child
-          margin-bottom: 0
-
-        strong, b
-          font-weight: bold
-
-        em, i
-          font-style: italic
-
-        a
-          color: red
-          text-decoration: none
-
-        a:visited
-          text-decoration: underline
-
-        a:hover
-          text-decoration: none
-          border-bottom: 2px solid red
-
-        code
-          font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace
-          padding: 1px 2px
-          font-size: 0.92em
-
-        blockquote
-          ul
-            font-size: 1.4em
-            list-style: circle
-            margin-bottom: 16px
-            margin-left: 30px
-
-            li
-              margin-bottom: 3px
-
-        abbr
-          cursor: help
-          border-bottom: 1px dotted black
-
-        > ol, > ul
-          margin: 0 0 18px 30px
-          list-style: disc
-
-          li
-            line-height: 21px
-            font-size: 1.38em
-            margin: 5px 0
-
-        > ol
-          list-style: decimal
-
-        pre
-          background: #2b2b2b
-          margin-bottom: 18px
-
-        table
-          font-size: 1.4em
-          margin: 0 18px 18px 18px
-          background: #eee
-
-          tr
-            border-bottom: 1px solid #ddd
-
-            &:last-child
-              border-bottom: none
-
-            th, td
-              padding: 7px 15px
 
       .examples
         li.example
@@ -227,7 +187,7 @@ $subheaderfont: "Bitstream Vera Serif", "Liberation Serif", Georgia, serif
               border-bottom: 2px solid #232323
               //box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3)
               font-size: 1.4em
-              font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace
+              font-family: $monofont
               padding: 10px 20px
               text-shadow: 0 2px 0 #e0c962
               line-height: 20px
@@ -320,7 +280,7 @@ $subheaderfont: "Bitstream Vera Serif", "Liberation Serif", Georgia, serif
                   width: 200px
 
                   code
-                    font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace
+                    font-family: $monofont
                     padding: 1px 2px
                     font-weight: normal
 
@@ -347,7 +307,7 @@ $subheaderfont: "Bitstream Vera Serif", "Liberation Serif", Georgia, serif
                 font-weight: bold
 
               code
-                font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace
+                font-family: $monofont
                 padding: 1px 2px
                 font-weight: normal
 

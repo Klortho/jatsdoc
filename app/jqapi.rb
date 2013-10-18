@@ -42,7 +42,7 @@ module Jqapi
     end
 
 
-    get 'LICENSE' do
+    get '/LICENSE' do
       content_type 'text'
       serve_file('', 'LICENSE')
     end
