@@ -15,7 +15,7 @@ documentation *content*.
     * [Deployment](#deployment)
     * [To do list](#to-do-list)
     * [See also](#see-also)
-    * [License](#license)
+    * [Credits and license](#credits-and-license)
 * [Implementation.md](Implementation.md) - notes about how it all works (from a Ruby newbie)
 * [JatsAdaptation.md](JatsAdaptation.md) - info about the JATS adaptation effort, including list
   of major changes, to do list, etc.
@@ -141,7 +141,8 @@ to:
 ## Credits and license
 
 The [jQAPI software](https://github.com/jqapi/jqapi) is released under MIT and GPL
-licenses, the full text of which can be found in the [LICENSE]() file here.
+licenses, the full text of which can be found in the
+[LICENSE](https://github.com/Klortho/jatsdoc/blob/master/LICENSE) file here.
 
 Thanks to [Sebastian Senf](http://mustardamus.com/) and others (see [credits
 here](http://jqapi.com/)) for producing such nice software.

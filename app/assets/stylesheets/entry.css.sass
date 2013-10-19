@@ -19,7 +19,7 @@ $monofont: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monos
     font-size: 1.4em
 
     a
-      text-shadow: 0px 0px 0.95px #005
+      text-shadow: 1px 1px 1px #888
 
     .original
       font-size: 0.9em
@@ -82,8 +82,8 @@ $monofont: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monos
       td
         border-top: thin groove
         border-bottom: thin groove
-        padding-top: .25em
-        padding-bottom: .25em
+        padding-top: .4em
+        padding-bottom: .4em
 
         p
           margin: 0
@@ -96,9 +96,20 @@ $monofont: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monos
       .row1
         background-color: #CFEFCF
 
+    table
+      border-spacing: 2px
+      display: table
+
+    tr, td
+      vertical-align: top
+      padding: 2px
+
     table[frame="box"]
       border: 1px solid black
-      border: collapse
+
+    table[frame="hsides"]
+      border-top: 1px solid black
+      border-bottom: 1px solid black
 
     table[rules="all"] td
       border: 1px solid black
@@ -123,7 +134,6 @@ $monofont: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monos
       li
         margin-bottom: .3em
 
-
     em
       font-style: italic
 
@@ -143,6 +153,51 @@ $monofont: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monos
 
     pre.taggedtext strong
       background-color: white
+
+    // The Element Context Table page
+
+    .letterindex
+      margin-bottom: 20px
+
+      h3
+        margin-bottom: 6px
+
+    .contexttable
+      margin-bottom: 20px
+      border-collapse: separate
+
+      th
+        font-weight: bold
+
+      td
+        padding-top: .4em
+        padding-bottom: .4em
+
+        p
+          margin: 0
+
+      .row1
+        background-color: #CFEFCF
+
+    // The real "index" page, at the end
+
+    .index\.entry
+      margin-bottom: 0
+      margin-top: 0.5em
+
+    .index\.alternative
+      display: block
+      margin-left: 2em
+
+    .index\.index
+      background-color: #CFEFCF
+      margin-top: 1em
+
+    .intable
+      font-size: 0.8em
+
+
+
 
   /* None of the stuff below is used */
 
