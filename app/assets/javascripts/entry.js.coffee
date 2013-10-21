@@ -30,6 +30,14 @@ class jqapi.Entry
         @loadContent slug                                   # find content via the slug
         $.bbq.pushState { p: slug }                         # set the new hash state with old #p= format
 
+      # Update active, and open any ancestor categories
+      $('#sidebar-content li.active').removeClass 'active'
+      if slug
+        activeEl = $("#sidebar-content li[data-slug='#{slug}']")
+        activeEl.addClass 'active'
+        activeEl.parents('li.top-cat, li.sub-cat').addClass 'open'
+
+
     jqapi.events.on 'window:resize', (e, winEl) =>        # on window resize event
       newHeight = winEl.height() - @headerHeight          # calculate new height
       @el.height newHeight                                # set new height
@@ -47,6 +55,8 @@ class jqapi.Entry
     document.title = $(entry).find("h1").text()
 
   restoreHomeEntry: ->
-    $('#entry-wrapper').replaceWith(@home_entry)
-    @home_entry.show()
-    document.title = @home_title
+    # Final check against an edge case when URL changes from "/" -> "/#"
+    if !$('#entry-wrapper').is( @home_entry )
+      $('#entry-wrapper').replaceWith(@home_entry)
+      @home_entry.show()
+      document.title = @home_title

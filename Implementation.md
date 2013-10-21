@@ -135,15 +135,68 @@ via ajax from *docs/index.json*.  It built an HTML structure like this:
 
 ### Managing hash state, loading entries
 
-An onclick handler is set in *entries.js.coffee*, that responds to clicks within the
-div#sidebar-content on any of the navigation items:
+The "p" hash parameter indicates which entry is being viewed.
+
+But note that when you first load the page, regardless of what "p" is, the index.html
+page loads, which has the "home page entry".  The home page entry will get replaced
+when the user clicks a link to another entry.  In order that we can restore it when
+needed, it is saved as `home_entry` in the (singleton) jqapi.Entry object.
+
+When the page is first loaded, a hashchange event is manually triggered:
+
+```coffee
+winEl
+  ...
+  .trigger 'hashchange'                                 # initially kick it off
+```
+
+The hashchange handler is set by code that looks like this:
+
+```coffee
+winEl
+  .on 'hashchange', ->                                  # on hash change, happens in entry load
+    slug = $.bbq.getState('p')                          # slug of requested entry
+    jqapi.events.trigger 'entry:load', [slug]           # load the entry, even if the slug is not defined
+```
+
+So, to recap:  an `entry:load` event is triggered both when the page first loads, and
+whenever the hash changes.
+
+
+In *entry.js.coffee*, a handler is set up for this event, that causes the content to
+be loaded.  It keeps track of the "`first_time`" it is called, and if it is the first time,
+and there is no slug, then that means the user just loaded the home page of the app, and
+we don't want to replace the home page entry, so it returns.
+
+
+```coffee
+jqapi.events.on 'entry:load', (e, slug) =>            # entry content must be loaded on this event
+  if @first_time
+    @first_time = false
+    return if !slug
+  ...
+```
+
+If it's not the first time, and there is no slug, then we want to restore the home page entry:
+
+```coffee
+if !slug
+  @restoreHomeEntry() if @home_entry
+```
+
+The entries in the navigation panel are handled by setting an onclick handler in
+*entries.js.coffee*, that responds to clicks within the
+div#sidebar-content on any of the navigation items.  It only causes an entry to be loaded
+if there is an associated *@data-slug* attribute.
 
 ```coffee
 @el.on 'click', '.entry,.top-cat,.sub-cat', ->
-  self.loadEntry $(@)
+  $this = $(@)
+  li = if ($this.prop("tagName") == "LI") then $this else $this.parent()
+  if li.attr('data-slug') then self.loadEntry li
 ```
 
-Inside that event handler, `bbq.pushState` is called, which causes the browser
+Inside that `loadEntry` event handler, `bbq.pushState` is called, which causes the browser
 address to get the "#p=*slug*" added to it, and triggering a hashchange event:
 
 ```coffee
@@ -157,16 +210,6 @@ in turn propogates an `entry:load` event:
 .on 'hashchange', ->                                  # on hash change, happens in entry load
   slug = $.bbq.getState('p')                          # slug of requested entry
   jqapi.events.trigger 'entry:load', [slug] if slug   # if the slug is set load the entry
-```
-
-In *entry.js.coffee*, a handler is set up for this event, that causes the content to
-be loaded:
-
-```coffee
-jqapi.events.on 'entry:load', (e, slug) =>            # entry content must be loaded on this event
-  ...
-  @loadContent slug                                   # find content via the slug
-  $.bbq.pushState { p: slug }                         # set the new hash state with old #p= format
 ```
 
 Note that in the above sequence, `$.bbq.pushState()` gets called twice with the same

@@ -103,7 +103,13 @@ to:
   "#p=entry;t=target".
 
 * When you reload an page (F5), the navigation panel should open to show the page
-  you are on.
+  you are on.  It also needs to update the "active" page.  Right now it doesn't:
+    * Go to the home page
+    * Open both "Attributes" and "Elements"
+    * Click on "<abbrev>"
+    * Inside the <abbrev> entry, under "Attributes", click on "alt"
+    * Note that "<abbrev>" is still "active", and (scroll down in the nav panel)
+      "@alt" is not.
 
 * Include a small set of test/sample documentation files in the docs directory of
   the github repository.  When this is done, we'll need to include instructions about
