@@ -45,21 +45,25 @@ find your webrick configuration file (if you're using rvm, it's somewhere like
 *~/.rvm/rubies/ruby-1.9.3-p448/lib/ruby/1.9.1/webrick/config.rb*)
 and change `:DoNotReverseLookup` to `true`.
 
-### Link to the documentation
-
-You'll need to generate a documentation set in the correct format, and link to
-it with a softlink named *docs*.
-
-[In the to do list (below) is to include a small set of sample documentation files, so
-you can play with the library right away.]
-
 
 ### Start the dev server
 
     bundle exec rackup
 
-Point your browser to http://localhost:9292 and there you have the
+Point your browser to http://localhost:9292 and there you should see the sample
 documentation, served with the jatsdoc library.
+
+
+### Link to your own documentation
+
+This repository includes a sample set of documentation files, that were generated
+by the [DtdAnalyzer](http://dtd.nlm.nih.gov/ncbi/dtdanalyzer/), in the *docs*
+directory of the project.
+
+To see some other documentation set through the dev server, it's just necessary to
+rename the repository *docs* directory, and then create a link with the name *docs*
+to that other documentation set.
+
 
 ## Deployment
 
@@ -76,7 +80,8 @@ which can then be served by a web server such as Apache.
 When you deploy a set of documentation files to "production", as opposed to serving
 them from the dev server, you'll need to change the URLs inside the index.html
 page to point to the library resources at their deployed locations.  For example,
-change
+if the jatsdoc library is unzipped to the "/jatsdoc" directory at the root of your
+server, you would change:
 
 ```html
 <link href='/assets/favicon.ico' rel='shortcut icon' type='image/x-icon' />
@@ -87,9 +92,9 @@ change
 to:
 
 ```html
-<link href='/jatsdoc-dev/favicon.ico' rel='shortcut icon' type='image/x-icon' />
-<link href='/jatsdoc-dev/jatsdoc.css' rel='stylesheet' type='text/css' />
-<script src='/jatsdoc-dev/jatsdoc.js' type='text/javascript'></script>
+<link href='/jatsdoc/favicon.ico' rel='shortcut icon' type='image/x-icon' />
+<link href='/jatsdoc/jatsdoc.css' rel='stylesheet' type='text/css' />
+<script src='/jatsdoc/jatsdoc.js' type='text/javascript'></script>
 ```
 
 
@@ -102,18 +107,10 @@ to:
   identifier to specify the entry itself, we'll need something like
   "#p=entry;t=target".
 
-* When you reload an page (F5), the navigation panel should open to show the page
-  you are on.  It also needs to update the "active" page.  Right now it doesn't:
-    * Go to the home page
-    * Open both "Attributes" and "Elements"
-    * Click on "<abbrev>"
-    * Inside the <abbrev> entry, under "Attributes", click on "alt"
-    * Note that "<abbrev>" is still "active", and (scroll down in the nav panel)
-      "@alt" is not.
-
-* Include a small set of test/sample documentation files in the docs directory of
-  the github repository.  When this is done, we'll need to include instructions about
-  how to switch to another docset by changing the values in *jqapi.rb*
+* Instead of the instructions above for creating a softlink to a different documentation
+  set under the dev server, figure out how to pass the location in as a parameter to
+  rackup.  As it is now, if you're working on another documentation set, it will show
+  up as a difference in your git repo.
 
 * Polish the styles in the nav panel, regarding the nested categories and entries.
   See the [JatsAdaptation](JatsAdaptation#Accomodate different document structure)
