@@ -2,5 +2,4 @@
 Gemfile.lock
 .sass-cache/
 tmp/
-docs
 jatsdoc/
