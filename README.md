@@ -126,6 +126,13 @@ to:
   identifier to specify the entry itself, we'll need something like
   "#p=entry;t=target".
 
+* When you open a hyperlink to another entry, the nav panel should scroll to bring that
+  into view.
+
+* Similarly, when you *first* go to the view and it has an entry already specified
+  (e.g. following a link like [this](http://jatspan.org/niso/archiving-1.0/#p=attr-contrib-type)
+  from outside) the navigation panel should open and scroll to the right spot.
+
 * Polish the styles in the nav panel, regarding the nested categories and entries.
   See the [JatsAdaptation](JatsAdaptation#Accomodate different document structure)
   page for an explanation.
