@@ -101,8 +101,27 @@ to:
 <script src='/jatsdoc/jatsdoc.js' type='text/javascript'></script>
 ```
 
+### Release procedure
+
+- Decide on a version number (e.g. 0.1).  (Right now, this isn't included in the code
+  anywhere, but it should be.  See to-do item below.)
+- Check the various README, Implementation, ..., files to make sure they are up-to-date
+- git commit and push
+- thor deploy:generate
+- Try out this jatsdoc directory somewhere
+- Tag it: `git tag -a v0.1 -m 'Tagging version 0.1'`
+- Push:  `git push --tags`
+- Zip it up:
+    - `mv jatsdoc jatsdoc-0.1`
+    - `zip -r jatsdoc-0.1.zip jatsdoc-0.1`
+- Copy it to destination on dtd.nlm.nih.gov:
+    - extract it to ncbi/jatsdoc/0.1
+    - copy the zip file to ncbi/jatsdoc/downloads
+
 
 ## To do list
+
+* Make a custom favicon.  Right now we're still using the jqapi one.
 
 * Search needs to support matching headers ("categories" and "subcategories").  Right
   now, you only see the matching leaf nodes ("entries").
@@ -111,10 +130,12 @@ to:
   identifier to specify the entry itself, we'll need something like
   "#p=entry;t=target".
 
-* Instead of the instructions above for creating a softlink to a different documentation
-  set under the dev server, figure out how to pass the location in as a parameter to
-  rackup.  As it is now, if you're working on another documentation set, it will show
-  up as a difference in your git repo.
+* When you open a hyperlink to another entry, the nav panel should scroll to bring that
+  into view.
+
+* Similarly, when you *first* go to the view and it has an entry already specified
+  (e.g. following a link like [this](http://jatspan.org/niso/archiving-1.0/#p=attr-contrib-type)
+  from outside) the navigation panel should open and scroll to the right spot.
 
 * Polish the styles in the nav panel, regarding the nested categories and entries.
   See the [JatsAdaptation](JatsAdaptation#Accomodate different document structure)
@@ -135,8 +156,15 @@ to:
       are four different states that should be easy to distinguish; combinations of
       'active' and 'open'
 
-* Implement a version number.  This should show up in the deploy directory (i.e.
-  "jatsdoc-1.0" instead of just "jatsdoc".
+* Implement a version number in the code somewhere.  This should show up in the deploy
+  directory (i.e. "jatsdoc-1.0" instead of just "jatsdoc".)
+
+* Instead of the instructions above for creating a softlink to a different documentation
+  set under the dev server, figure out how to pass the location in as a parameter to
+  rackup.  As it is now, if you're working on another documentation set, it will show
+  up as a difference in your git repo.
+
+* Make a home page for it?  Model it after http://dtd.nlm.nih.gov/ncbi/dtdanalyzer/.
 
 
 ## See also
