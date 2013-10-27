@@ -3,10 +3,14 @@
 This is a documentation browser library, developed in Ruby on Rails, that is
 derived from [jqapi](https://github.com/jqapi/jqapi).
 
-It was adapted in order to serve DTD documentation such as the [JATS Tag
-Library](http://jats.nlm.nih.gov/archiving/tag-library/1.0/).  See also the
-[JatsTagLibrary GitHub project](https://github.com/Klortho/JatsTagLibrary) for the
-documentation *content*.
+See it in action here:
+
+* NISO JATS 1.0 Tag Library alternative browser:
+  [Archiving and Interchange](http://jatspan.org/niso/archiving-1.0/),
+  [Publishing](http://jatspan.org/niso/publishing-1.0/), and
+  [Authoring](http://jatspan.org/niso/authoring-1.0/),
+* Integrated with the documentation-generator of the
+  [DtdAnalyzer](https://github.com/Klortho/DtdAnalyzer).
 
 ## Contents
 
@@ -138,7 +142,8 @@ to:
 ## See also
 
 * [GitHub Klortho/JatsTagLibrary](https://github.com/Klortho/JatsTagLibrary) -
-  This will be the source of the *content* for the documentation.
+  This is be the source of the *content* for the JATS Tag Library documentation
+  (linked to above).
 
 
 ## Credits and license
