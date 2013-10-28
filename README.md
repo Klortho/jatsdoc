@@ -122,7 +122,7 @@ to:
 ## To do list
 
 * Implement intra-page links, to targets within an entry (for example, the ones at the
-  top of [this page](http://jatspan.org/niso/archiving-1.0/#p=general-introduction).
+  top of [this page](http://jatspan.org/niso/archiving-1.0/#p=general-introduction)).
   Because we're using the fragment identifier to specify the entry itself, we'll need
   something like `#p=entry;t=target`.
 
