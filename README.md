@@ -126,10 +126,19 @@ to:
   Because we're using the fragment identifier to specify the entry itself, we'll need
   something like `#p=entry;t=target`.
 
+* Related to that are the "letter links" in the index page
+  [here](http://jatspan.org/niso/archiving-1.0/#p=index), that need to be fixed to use
+  that scheme.
+
+* Update the version of the Tag Library content.  What is deployed right now is from
+  "May 2012", but the latest and greatest is from August.
+
 * Make a custom favicon.  Right now we're still using the jqapi one.
 
 * Search needs to support matching headers ("categories" and "subcategories").  Right
   now, you only see the matching leaf nodes ("entries").
+
+* Port other (earlier) documentation sets in, if there is a demand for it.
 
 * When you open a hyperlink to another entry, the nav panel should scroll to bring that
   into view.
