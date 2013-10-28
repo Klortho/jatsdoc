@@ -121,14 +121,15 @@ to:
 
 ## To do list
 
+* Implement intra-page links, to targets within an entry (for example, the ones at the
+  top of [this page](http://jatspan.org/niso/archiving-1.0/#p=general-introduction).
+  Because we're using the fragment identifier to specify the entry itself, we'll need
+  something like `#p=entry;t=target`.
+
 * Make a custom favicon.  Right now we're still using the jqapi one.
 
 * Search needs to support matching headers ("categories" and "subcategories").  Right
   now, you only see the matching leaf nodes ("entries").
-
-* Figure out how to link to targets within an entry.  Because we're using the fragment
-  identifier to specify the entry itself, we'll need something like
-  "#p=entry;t=target".
 
 * When you open a hyperlink to another entry, the nav panel should scroll to bring that
   into view.
@@ -173,6 +174,7 @@ to:
   This is be the source of the *content* for the JATS Tag Library documentation
   (linked to above).
 
+* [GitHub NCBITools/DtdAnalyzer](https://github.com/NCBITools/DtdAnalyzer)
 
 ## Credits and license
 
