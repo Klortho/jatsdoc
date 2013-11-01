@@ -123,8 +123,7 @@ to:
 
 * Implement intra-page links, to targets within an entry (for example, the ones at the
   top of [this page](http://jatspan.org/niso/archiving-1.0/#p=general-introduction)).
-  Because we're using the fragment identifier to specify the entry itself, we'll need
-  something like `#p=entry;t=target`.
+  See [issue #1](https://github.com/Klortho/jatsdoc/issues/1) for details.
 
 * Related to that are the "letter links" in the index page
   [here](http://jatspan.org/niso/archiving-1.0/#p=index), that need to be fixed to use
