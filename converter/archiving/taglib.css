@@ -1,0 +1,33 @@
+#header {
+  background: darkgreen;
+  color: white;
+}
+#header #signatures-nav li {
+  text-shadow: 1px 1px 0 rgba(44, 178, 44, 0.5)
+}
+#header #navigation li a {
+  color: white
+}
+#header #navigation li a:hover {
+  background: #50B250;
+}
+
+#entry a {
+  color: darkgreen;
+}
+
+#entry #footer {
+  background: darkgreen;
+  color: white;
+}
+#entry #footer h2 {
+  text-shadow: 1px 1px 0 rgba(44, 178, 44, 0.5)
+}
+#entry #footer a {
+  color: white;
+  text-decoration: underline;
+}
+#entry #footer a:hover {
+  background: #2CB22C;
+}
+
