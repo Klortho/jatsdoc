@@ -20,7 +20,7 @@
   <xsl:param name='page-key' select='""'/>
   
   <xsl:param name="jatsdoc-url" 
-    select='"http://dtd.nlm.nih.gov/ncbi/jatsdoc/0.1"'/>
+    select='"http://dtd.nlm.nih.gov/ncbi/jatsdoc/0.2"'/>
   <xsl:param name='profile' select='"Blue1_1"'/>
   
 
