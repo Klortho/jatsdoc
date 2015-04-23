@@ -21,24 +21,62 @@
   
   <xsl:param name="jatsdoc-url" 
     select='"http://dtd.nlm.nih.gov/ncbi/jatsdoc/0.2"'/>
-  <xsl:param name='profile' select='"Blue1_1"'/>
-  
+  <xsl:param name='profile' select='"Pumpkin1_1"'/>
 
 
+
+  <!-- Colors, versions, profiles, and all that stuff -->
   <xsl:variable name='color' select='replace($profile, "\d.*", "")'/>
-  <xsl:variable name='elem-sec'
-    select='mtl:taglib.collective/collective/elem.sec'/>
-  <xsl:variable name='attr-sec'
-    select='mtl:taglib.collective/collective/attr.sec'/>
-  <xsl:variable name='pe-sec'
-    select='mtl:taglib.collective/collective/pe.sec'/>
+  <xsl:variable name='full-version-num'
+    select='string(mtl:taglib.collective/metadata/vers.history/release/vers.number)'/>
+  <xsl:variable name='version-num' 
+    select='replace($full-version-num, ".* ", "")'/>
 
+  <xsl:variable name='flavor'>
+    <xsl:choose>
+      <xsl:when test="$profile = 'Blue1_1'">
+        <xsl:value-of select="'publishing'"/>
+      </xsl:when>
+      <xsl:when test='$profile = "Green1_1"'>
+        <xsl:value-of select="'archiving'"/>
+      </xsl:when>
+      <xsl:when test ='$profile = "Pumpkin1_1"'>
+        <xsl:value-of select="'articleauthoring'"/>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:variable>
+  <xsl:variable name="original-base-url" 
+    select="concat('http://jats.nlm.nih.gov/', $flavor, '/tag-library/', $version-num)"/>
+  <xsl:variable name='id-prefix'>
+    <xsl:choose>
+      <xsl:when test="$flavor = 'publishing'">
+        <xsl:text>pub-</xsl:text>
+      </xsl:when>
+      <xsl:when test="$flavor = 'archiving'">
+        <xsl:text>arc-</xsl:text>
+      </xsl:when>
+      <xsl:when test="$flavor = 'articleauthoring'">
+        <xsl:text>aut-</xsl:text>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:variable>
+
+  <!-- Suck in the examples XML file -->
   <xsl:variable name='root-dir' select='replace(base-uri(), "(.*)/.*", "$1")'/>
   <xsl:variable name="profile-dir" select="concat($root-dir, '/Taglib-', $color)"/>
   <xsl:variable name='examples-filename' 
     select='concat($profile-dir, "/", $profile, "-examples.xml")'/>
   <xsl:variable name='examples' select='document($examples-filename)/mtl:examples.set'/>
 
+  <!-- Some variables to store important sections of the main document -->
+  <xsl:variable name='elem-sec'
+    select='mtl:taglib.collective/collective/elem.sec'/>
+  <xsl:variable name='attr-sec'
+    select='mtl:taglib.collective/collective/attr.sec'/>
+  <xsl:variable name='pe-sec'
+    select='mtl:taglib.collective/collective/pe.sec'/>
+  
+  <!-- Utility functions -->
   <xsl:function name='f:elem-ref-to-tag'>
     <xsl:param name='ref'/>
     <xsl:value-of select="substring-after($ref, 'elem-')"/>
@@ -66,6 +104,10 @@
     <xsl:variable name='pe-info' select='$pe-sec/pe.info[@name=$ref]'/>
     <xsl:value-of select='string($pe-info/pe.name)'/>
   </xsl:function>
+  <xsl:function name='f:page-slug'>
+    <xsl:param name="id"/>
+    <xsl:value-of select="substring-after($id, $id-prefix)"/>
+  </xsl:function>
   
   <xsl:template match='/'>
     <!--<xsl:message>
@@ -79,20 +121,6 @@
 
     <xsl:for-each select='//mtl:profile[profile.metadata/shortname = $profile]'>
       <xsl:variable name='title' select='profile.metadata/title'/>
-      <xsl:variable name="version" select="substring-after($title, 'Version ')"/>
-      <xsl:variable name='flavor'>
-        <xsl:choose>
-          <xsl:when test="$profile = 'Blue1_1'">
-            <xsl:value-of select="'publishing'"/>
-          </xsl:when>
-          <xsl:when test='$profile = "Green1_1"'>
-            <xsl:value-of select="'archiving'"/>
-          </xsl:when>
-          <xsl:when test ='$profile = "Pumpkin1_1"'>
-            <xsl:value-of select="'authoring'"/>
-          </xsl:when>
-        </xsl:choose>
-      </xsl:variable>
       <xsl:variable name="pub-date" select='profile.metadata/pub.date'/>
 
       <!-- Generate index.html -->
@@ -147,8 +175,7 @@
                 </div>
                 <div id='entry'>
                   <div id='entry-wrapper'>
-                    <a class='original'
-                      href='http://jats.nlm.nih.gov/publishing/tag-library/{$version}/'>Original</a>
+                    <a class='original' href='{$original-base-url}/'>Original</a>
                     <h1>
                       <xsl:apply-templates select='profile.metadata/title'/>
                     </h1>
@@ -172,8 +199,7 @@
                       issue there.
                     </p>
                     <p>
-                      The content is from the official <a 
-                        href='http://jats.nlm.nih.gov/publishing/tag-library/{$version}/'>JATS
+                      The content is from the official <a href='{$original-base-url}/'>JATS
                         Tag Library documentation</a>, 
                       downloaded from
                       the NLM FTP site at <a href='ftp://ftp.ncbi.nlm.nih.gov/pub/jats/'>ftp://ftp.ncbi.nlm.nih.gov/pub/jats/</a>.
@@ -259,7 +285,7 @@
         <xsl:text> has-kids</xsl:text>
       </xsl:if>
     </xsl:variable>
-    <li class="{$class}" data-slug="{@id}">
+    <li class="{$class}" data-slug="{f:page-slug(@id)}">
       <span class="top-cat-name">
         <xsl:value-of select='title'/>
       </span>
@@ -292,7 +318,7 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <li class='{$li-class}' data-slug='{@id}'>
+    <li class='{$li-class}' data-slug='{f:page-slug(@id)}'>
       <span class='{$span-class}'>
         <xsl:variable name='t'>
           <xsl:apply-templates select='title'/>
@@ -309,9 +335,13 @@
   
   <xsl:template match="chapter">
     <xsl:param name="flavor"/>
-    <xsl:if test='$page-key = "" or $page-key = @id'>
-      <xsl:result-document href='{$flavor}/entries/{@id}.html'>
+    <xsl:variable name="slug" select="f:page-slug(@id)"/>
+    <xsl:if test='$page-key = "" or $page-key = $slug'>
+      <xsl:result-document href='{$flavor}/entries/{$slug}.html'>
         <div id="entry-wrapper">
+          <span class="original">
+            <a href="{$original-base-url}/chapter/{$slug}.html">Original</a>
+          </span>
           <xsl:apply-templates select='*'/>
         </div>
       </xsl:result-document>
@@ -323,9 +353,13 @@
 
   <xsl:template match="section[@keep!='yes']" mode='section'>
     <xsl:param name="flavor"/>
+    <xsl:variable name="slug" select="f:page-slug(@id)"/>
     <xsl:if test='$page-key = "" or $page-key = @id'>
-      <xsl:result-document href='{$flavor}/entries/{@id}.html'>
+      <xsl:result-document href='{$flavor}/entries/{$slug}.html'>
         <div id="entry-wrapper">
+          <span class="original">
+            <a href="{$original-base-url}/chapter/{$slug}.html">Original</a>
+          </span>
           <xsl:apply-templates select='*'/>
         </div>
       </xsl:result-document>
@@ -337,16 +371,20 @@
   
   
   <xsl:template match='intro' mode='toc'>
-    <li class="top-cat" data-slug="{@id}"> 
+    <li class="top-cat" data-slug="{f:page-slug(@id)}"> 
       <span class="top-cat-name">General Introduction</span>
     </li>
   </xsl:template>
 
   <xsl:template match="intro">
     <xsl:param name="flavor"/>
+    <xsl:variable name="slug" select="f:page-slug(@id)"/>
     <xsl:if test='$page-key = "" or $page-key = @id'>
-      <xsl:result-document href='{$flavor}/entries/{@id}.html'>
+      <xsl:result-document href='{$flavor}/entries/{$slug}.html'>
         <div id="entry-wrapper">
+          <span class="original">
+            <a href="{$original-base-url}/chapter/{$slug}.html">Original</a>
+          </span>
           <h1>General Introduction</h1>
           <xsl:apply-templates select='*'/>
         </div>
@@ -368,9 +406,14 @@
   <!-- Generate the intro to elements page, then all the element pages themselves. -->
   <xsl:template match='profile.elem.intro[not(@NISO="yes") and intro]'>
     <xsl:param name='flavor'/>
+    <xsl:variable name="slug" select="'elements'"/>
     <xsl:if test='$page-key = "" or $page-key = "elements"'>
-      <xsl:result-document href='{$flavor}/entries/elements.html'>
+      <xsl:result-document href='{$flavor}/entries/{$slug}.html'>
         <div id="entry-wrapper">
+          <span class="original">
+            <!-- hard code this anomalous original url -->
+            <a href="{$original-base-url}/element/aut-elem-sec-intro.html">Original</a>
+          </span>
           <h1>Introduction to Elements</h1>
           <xsl:apply-templates select='intro/*'/>
         </div>
@@ -397,9 +440,14 @@
   <!-- Generate the intro to attributes page, then all the attr pages themselves. -->
   <xsl:template match='profile.attr.intro[not(@NISO="yes") and intro]'>
     <xsl:param name='flavor'/>
+    <xsl:variable name="slug" select="'attributes'"/>
     <xsl:if test='$page-key = "" or $page-key = "attributes"'>
-      <xsl:result-document href='{$flavor}/entries/attributes.html'>
+      <xsl:result-document href='{$flavor}/entries/{$slug}.html'>
         <div id="entry-wrapper">
+          <span class="original">
+            <!-- hard-code this anomalous original url -->
+            <a href="{$original-base-url}/attribute/aut-attr-sec-intro.html">Original</a>
+          </span>
           <h1>Introduction to Attributes</h1>
           <xsl:apply-templates select='intro/*'/>
         </div>
@@ -426,9 +474,14 @@
   <!-- Generate the intro to parameter entities page, then all the pe pages themselves. -->
   <xsl:template match='profile.pe.intro[not(@NISO="yes") and intro]'>
     <xsl:param name='flavor'/>
-    <xsl:if test='$page-key = "" or $page-key = "parameter-entities"'>
-      <xsl:result-document href='{$flavor}/entries/parameter-entities.html'>
+    <xsl:variable name="slug" select="'parameter-entities'"/>
+    <xsl:if test='$page-key = "" or $page-key = $slug'>
+      <xsl:result-document href='{$flavor}/entries/{$slug}.html'>
         <div id="entry-wrapper">
+          <span class="original">
+            <!-- hard-code this anomalous original url -->
+            <a href="{$original-base-url}/pe/aut-pe-sec-intro.html">Original</a>
+          </span>
           <h1>Introduction to Parameter Entities</h1>
           <xsl:apply-templates select='intro/*'/>
         </div>
@@ -472,11 +525,15 @@
   <xsl:template match="elem.info">
     <xsl:param name='flavor'/>
     <xsl:variable name="ref" select="@name"/>
+    <xsl:variable name="tag" select="f:elem-ref-to-tag($ref)"/>
     <xsl:if test='$page-key = "" or $page-key = $ref'>
       <xsl:result-document href='{$flavor}/entries/{$ref}.html'>
         <div id='entry-wrapper'>
+          <span class="original">
+            <a href="{$original-base-url}/element/{$tag}.html">Original</a>
+          </span>
           <h1>
-            &lt;<xsl:value-of select="f:elem-ref-to-tag($ref)"/>&gt;
+            &lt;<xsl:value-of select="$tag"/>&gt;
             <xsl:value-of select="f:elem-ref-to-name($ref)"/>
           </h1>
           <xsl:apply-templates 
@@ -527,11 +584,15 @@
   <xsl:template match="attr.info">
     <xsl:param name='flavor'/>
     <xsl:variable name="ref" select="@name"/>
+    <xsl:variable name="tag" select="f:attr-ref-to-tag($ref)"/>
     <xsl:if test='$page-key = "" or $page-key = $ref'>
       <xsl:result-document href='{$flavor}/entries/{$ref}.html'>
         <div id='entry-wrapper'>
+          <span class="original">
+            <a href="{$original-base-url}/attribute/{$tag}.html">Original</a>
+          </span>
           <h1>
-            @<xsl:value-of select="f:attr-ref-to-tag($ref)"/>
+            @<xsl:value-of select="$tag"/>
             <xsl:text> </xsl:text>
             <xsl:value-of select="f:attr-ref-to-name($ref)"/>
           </h1>
@@ -606,11 +667,15 @@
   <xsl:template match="pe.info">
     <xsl:param name='flavor'/>
     <xsl:variable name="ref" select="@name"/>
+    <xsl:variable name="tag" select="f:pe-ref-to-tag($ref)"/>
     <xsl:if test='$page-key = "" or $page-key = $ref'>
       <xsl:result-document href='{$flavor}/entries/{$ref}.html'>
         <div id='entry-wrapper'>
+          <span class="original">
+            <a href="{$original-base-url}/pe/{$tag}.html">Original</a>
+          </span>
           <h1>
-            @<xsl:value-of select="f:pe-ref-to-tag($ref)"/>
+            @<xsl:value-of select="$tag"/>
             <xsl:text> </xsl:text>
             <xsl:value-of select="f:pe-ref-to-name($ref)"/>
           </h1>
