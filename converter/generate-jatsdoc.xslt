@@ -6,6 +6,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:mtl="http://www.mulberrytech.com/taglib"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:xsd="http://www.w3.org/2000/10/XMLSchema"
                 xmlns:f="http://jatspan.org/fn"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:x="http://jatspan.org/ns/tmp"
@@ -17,10 +18,15 @@
 
   <!-- If this is not the empty string, then we'll only convert the indicated page.  This is used
     for debugging, so we don't have to convert the whole document every time. -->
-  <xsl:param name='page-key' select='""'/>
-  
+  <xsl:param name='page-key' select='"index"'/>
+
+<!--
   <xsl:param name="jatsdoc-url" 
     select='"http://dtd.nlm.nih.gov/ncbi/jatsdoc/0.2"'/>
+-->
+  <xsl:param name="jatsdoc-url" 
+    select='"http://ipmc-dev3/cfm/web/jatsdoc/jatsdoc"'/>
+  
   <xsl:param name='profile' select='"Pumpkin1_1"'/>
 
 
@@ -61,13 +67,23 @@
     </xsl:choose>
   </xsl:variable>
 
-  <!-- Suck in the examples XML file -->
+  <!-- Read in the examples XML file -->
   <xsl:variable name='root-dir' select='replace(base-uri(), "(.*)/.*", "$1")'/>
   <xsl:variable name="profile-dir" select="concat($root-dir, '/Taglib-', $color)"/>
   <xsl:variable name='examples-filename' 
     select='concat($profile-dir, "/", $profile, "-examples.xml")'/>
   <xsl:variable name='examples' select='document($examples-filename)/mtl:examples.set'/>
 
+  <!-- Read in the schema -->
+  <xsl:variable name="schema-filename" 
+    select='concat($profile-dir, "/", $profile, "-schema.xml")'/>
+  <xsl:variable name='schema' select='document($schema-filename)/xsd:schema'/>
+  
+  <!-- Read in the models file -->
+  <xsl:variable name="models-filename"
+    select='concat($profile-dir, "/", $profile, "-english-models.xml")'/>
+  <xsl:variable name='models' select='document($models-filename)/modeldescdump'/>
+  
   <!-- Some variables to store important sections of the main document -->
   <xsl:variable name='elem-sec'
     select='mtl:taglib.collective/collective/elem.sec'/>
@@ -354,7 +370,7 @@
   <xsl:template match="section[@keep!='yes']" mode='section'>
     <xsl:param name="flavor"/>
     <xsl:variable name="slug" select="f:page-slug(@id)"/>
-    <xsl:if test='$page-key = "" or $page-key = @id'>
+    <xsl:if test='$page-key = "" or $page-key = $slug'>
       <xsl:result-document href='{$flavor}/entries/{$slug}.html'>
         <div id="entry-wrapper">
           <span class="original">
@@ -379,7 +395,7 @@
   <xsl:template match="intro">
     <xsl:param name="flavor"/>
     <xsl:variable name="slug" select="f:page-slug(@id)"/>
-    <xsl:if test='$page-key = "" or $page-key = @id'>
+    <xsl:if test='$page-key = "" or $page-key = $slug'>
       <xsl:result-document href='{$flavor}/entries/{$slug}.html'>
         <div id="entry-wrapper">
           <span class="original">
@@ -407,7 +423,7 @@
   <xsl:template match='profile.elem.intro[not(@NISO="yes") and intro]'>
     <xsl:param name='flavor'/>
     <xsl:variable name="slug" select="'elements'"/>
-    <xsl:if test='$page-key = "" or $page-key = "elements"'>
+    <xsl:if test='$page-key = "" or $page-key = $slug'>
       <xsl:result-document href='{$flavor}/entries/{$slug}.html'>
         <div id="entry-wrapper">
           <span class="original">
@@ -441,7 +457,7 @@
   <xsl:template match='profile.attr.intro[not(@NISO="yes") and intro]'>
     <xsl:param name='flavor'/>
     <xsl:variable name="slug" select="'attributes'"/>
-    <xsl:if test='$page-key = "" or $page-key = "attributes"'>
+    <xsl:if test='$page-key = "" or $page-key = $slug'>
       <xsl:result-document href='{$flavor}/entries/{$slug}.html'>
         <div id="entry-wrapper">
           <span class="original">
@@ -556,7 +572,65 @@
             </xsl:call-template>
             <br/>
           </xsl:for-each>
+          
+          <xsl:variable name="xsd-element" select="$schema/xsd:element[@name=$tag]"/>
+          <xsl:if test='$xsd-element//mtl:contentModel'>
+            <div class='contentmodel'>
+              <h2>Content Model</h2>
+              <pre class='contentdesc'>
+                <xsl:value-of select='$xsd-element//mtl:contentModel'/>
+              </pre>
+            </div>
+          </xsl:if>
+          
+          <xsl:if test='$xsd-element//mtl:contentModelNoParm'>
+            <div class='contentmodel'>
+              <h2>Expanded Content Model</h2>
+              <pre class='contentdesc'>
+                <xsl:value-of select='$xsd-element//mtl:contentModelNoParm'/>
+              </pre>
+            </div>
+          </xsl:if>
+          
+          <xsl:variable name="elem-model" select="$models/elem.info[$ref = @name]"/>
+          <xsl:if test='$elem-model'>
+            <div class='modeldesc'>
+              <h2>Description</h2>
+              <xsl:apply-templates select="$elem-model/node()">
+                <xsl:with-param name="link-elems" tunnel="yes" select='true()'/>
+              </xsl:apply-templates>
+            </div>
+          </xsl:if>
+          
+          <p><xsl:value-of select="$ref"/></p>
+          
+          <xsl:variable name='parents' select="$models/elem.info[descendant::elem.name.ref[@elem.ref=$ref]]"/>
+          <xsl:choose>
+            <xsl:when test="$parents">
+              <div class='elementcontext'>
+                <h3>This element may be contained in:</h3>
+                <xsl:for-each select='$parents'>
+                  <xsl:sort select="@elem.ref"/>
+                  <xsl:call-template name='elem.tag.ref'>
+                    <xsl:with-param name="ref" select="@name"/>
+                    <xsl:with-param name="autolink" select="'yes'"/>
+                  </xsl:call-template>
+                  <xsl:if test='position() != last()'>
+                    <xsl:text>, </xsl:text>
+                  </xsl:if>
+                </xsl:for-each>
+              </div>
+            </xsl:when>
+            <xsl:otherwise>
+              <div class='elementcontext'>
+                <h3>This top-level element may not be contained in any other elements.</h3>
+              </div>
+            </xsl:otherwise>
+          </xsl:choose>
+          
+          <xsl:apply-templates select='$examples/elem.examp[@name=$ref]'/>
         </div>
+        
       </xsl:result-document>
     </xsl:if>
   </xsl:template>
@@ -689,7 +763,7 @@
   
 
 
-  <xsl:template match="attr.examp">
+  <xsl:template match="attr.examp|elem.examp">
     <xsl:apply-templates select='*'/>
   </xsl:template>
   <xsl:template match="examp.group">
@@ -702,11 +776,20 @@
       <xsl:apply-templates select="*"/>
     </div>
   </xsl:template>
+
   <xsl:template match="tagged.examp">
-    <xsl:variable name="highlight-attr" select="mtl:mksafe/@attribute"/>
-    <xsl:variable name="highlight-elem" select="mtl:mksafe/@element"/>
+    <div class='taggedexamp'>
+      <pre class='taggedtext'>
+        <xsl:apply-templates select='*'/>
+      </pre>
+    </div>
+  </xsl:template>
+  
+  <xsl:template match='mtl:mksafe'>
+    <xsl:variable name="highlight-attr" select="@attribute"/>
+    <xsl:variable name="highlight-elem" select="@element"/>
     <xsl:variable name='example-document' 
-      select='document(concat($profile-dir, "/", mtl:mksafe/@file))'/>
+      select='document(concat($profile-dir, "/", @file))'/>
     <xsl:variable name="example-tokens">
       <xsl:apply-templates select="$example-document" mode='tokenize'>
         <xsl:with-param name="highlight-elem" select="$highlight-elem"/>
@@ -715,7 +798,7 @@
     <xsl:variable name='elided'>
       <xsl:for-each-group select='$example-tokens/*' 
         group-starting-with="x:start-hellip|x:end-hellip">
-s        <xsl:choose>
+        <xsl:choose>
           <xsl:when test="current-group()[1]/self::x:start-hellip">
             <x:hellip/>
           </xsl:when>
@@ -728,18 +811,31 @@ s        <xsl:choose>
         </xsl:choose>
       </xsl:for-each-group>
     </xsl:variable>
-    <!-- 
-      FIXME:  element highlighting is not done yet.
-      I plan to use for-each-group, with (similar to the above)
-      group-starting-with="x:start-highlight|x:end-highlight".
-    -->
-    <div class='taggedexamp'>
-      <pre class='taggedtext'>
-        <xsl:apply-templates select="$elided/*" mode='serialize'>
-          <xsl:with-param name="highlight-attr" select="$highlight-attr"/>
-        </xsl:apply-templates>
-      </pre>
-    </div>
+
+    <xsl:for-each-group select="$elided/*"
+      group-starting-with="x:start-highlight|x:end-highlight">
+      <xsl:choose>
+        <xsl:when test="current-group()[1]/self::x:start-highlight">
+          <strong>
+            <span class='focus'>
+              <xsl:apply-templates select='current-group()[position() > 1]' mode='serialize'>
+                <xsl:with-param name="highlight-attr" select="$highlight-attr"/>
+              </xsl:apply-templates>
+            </span>
+          </strong>
+        </xsl:when>
+        <xsl:when test="current-group()[1]/self::x:end-highlight">
+          <xsl:apply-templates select='current-group()[position() > 1]' mode='serialize'>
+            <xsl:with-param name="highlight-attr" select="$highlight-attr"/>
+          </xsl:apply-templates>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates select='current-group()' mode='serialize'>
+            <xsl:with-param name="highlight-attr" select="$highlight-attr"/>
+          </xsl:apply-templates>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each-group>
   </xsl:template>
 
   <xsl:template match="processing-instruction()" mode="tokenize">
@@ -764,10 +860,12 @@ s        <xsl:choose>
     <xsl:if test='name() = $highlight-elem'>
       <x:start-highlight/>
     </xsl:if>
-    <x:start-tag name='{name()}'>
+s    <x:start-tag name='{name()}'>
       <xsl:apply-templates select='@*' mode='tokenize'/>
     </x:start-tag>
-    <xsl:apply-templates select="node()" mode='tokenize'/>
+    <xsl:apply-templates select="node()" mode='tokenize'>
+      <xsl:with-param name="highlight-elem" select="$highlight-elem"/>
+    </xsl:apply-templates>
     <x:end-tag name='{name()}'/>
     <xsl:if test='name() = $highlight-elem'>
       <x:end-highlight/>
@@ -812,6 +910,12 @@ s        <xsl:choose>
     <xsl:text>...</xsl:text>
   </xsl:template>
   
+  <xsl:template match='x:start-highlight' mode='serialize'>
+    <xsl:text>[[[</xsl:text>
+  </xsl:template>
+  <xsl:template match='x:end-highlight' mode='serialize'>
+    <xsl:text>]]]</xsl:text>
+  </xsl:template>
   
 
   <xsl:template match='pe.info' mode='toc'>
@@ -932,18 +1036,37 @@ s        <xsl:choose>
   <xsl:template match="elem.name.ref" name='elem.name.ref'>
     <xsl:param name='ref' select='@elem.ref'/>
     <xsl:param name='autolink' select='@autolink'/>
-    <xsl:variable name="span">
-      <span class='elementname'><xsl:value-of
-        select="f:elem-ref-to-name($ref)"/></span>
-    </xsl:variable>
+    <xsl:param name='link-elems' tunnel="yes" select='false()'/>
+    <!-- In certain contexts (e.g., the "Description" part of the content model of an element), 
+      <elem.name.ref>s should be rendered as a fully linked tag+name combination. This context is
+      active when $link-elems is true. -->
     <xsl:choose>
-      <xsl:when test="$autolink='yes'">
-        <a href='#p={$ref}' title='{concat("&lt;", f:elem-ref-to-tag($ref), "&gt;")}'>
-          <xsl:copy-of select='$span'/>
-        </a>
+      <xsl:when test="$link-elems">
+        <xsl:call-template name='elem.tag.ref'>
+          <xsl:with-param name="link-elems" tunnel='yes' select='false()'/>
+          <xsl:with-param name="autolink" select='"yes"'/>
+        </xsl:call-template>
+        <xsl:text> </xsl:text>
+        <xsl:call-template name='elem.name.ref'>
+          <xsl:with-param name="link-elems" tunnel='yes' select='false()'/>
+          <xsl:with-param name="autolink" select='"yes"'/>
+        </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:copy-of select='$span'/>
+        <xsl:variable name="span">
+          <span class='elementname'><xsl:value-of
+            select="f:elem-ref-to-name($ref)"/></span>
+        </xsl:variable>
+        <xsl:choose>
+          <xsl:when test="$autolink='yes'">
+            <a href='#p={$ref}' title='{concat("&lt;", f:elem-ref-to-tag($ref), "&gt;")}'>
+              <xsl:copy-of select='$span'/>
+            </a>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:copy-of select='$span'/>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -1039,6 +1162,12 @@ s        <xsl:choose>
   </xsl:template>
   <xsl:template match='@*' mode='table'>
     <xsl:copy/>
+  </xsl:template>
+  
+  <xsl:template match='codeblock'>
+    <pre class='codeblock'>
+      <xsl:apply-templates select="*"/>
+    </pre>
   </xsl:template>
 
 </xsl:stylesheet>
